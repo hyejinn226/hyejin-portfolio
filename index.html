@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portfolio — 공간을 설계하고, 인터랙션으로 완성합니다</title>
+<meta name="description" content="3D 모델링, 모션, 웹 개발을 잇는 인터랙션 디자이너 · 개발자의 포트폴리오">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css">
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="#hero" data-bind="logo">HJ</a>
+  <nav class="nav" aria-label="메뉴">
+    <a href="#main">Main</a>
+    <a href="#sub">Sub</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <!-- 메인: 어두운 배경 + 큰 문장 -->
+  <section class="hero" id="hero">
+    <div class="hero-stage">
+      <div class="hero-glow" id="hero-glow" aria-hidden="true"></div>
+      <div class="hero-copy" id="hero-copy">
+        <h1 class="hero-title" id="hero-title">Design the Space, Complete It with Interaction</h1>
+        <p class="hero-desc" data-bind="heroDesc"></p>
+      </div>
+      <div class="hero-foot" id="hero-foot">
+        <p><strong data-bind="name">[이름]</strong> · <span data-bind="role">Interaction Designer & Developer</span></p>
+        <p class="hero-scroll">Scroll to explore</p>
+      </div>
+      <div class="hero-wash" id="hero-wash" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- 메인 프로젝트 -->
+  <section class="block" id="main">
+    <header class="block-head">
+      <p class="block-k">Main Projects <span id="main-count">02</span></p>
+      <h2 class="block-title" data-split>Main Project</h2>
+    </header>
+    <div id="main-list"></div>
+  </section>
+
+  <!-- 서브 프로젝트 -->
+  <section class="block block-sub" id="sub">
+    <header class="block-head">
+      <p class="block-k">Sub Projects <span id="sub-count">03</span></p>
+      <h2 class="block-title" data-split>Sub Project</h2>
+    </header>
+    <ul class="sp-list" id="sub-list"></ul>
+  </section>
+
+  <!-- About: 프로필 + 스킬 -->
+  <section class="about" id="about">
+    <div class="about-grid">
+      <div class="about-profile" data-reveal>
+        <p class="block-k">About</p>
+        <div class="about-photo" id="about-photo" aria-hidden="true"><span>PHOTO</span></div>
+        <h2 class="about-name" data-bind="name">[이름]</h2>
+        <p class="about-role" data-bind="role"></p>
+        <p class="about-bio" data-bind="bio"></p>
+        <dl class="about-facts" id="about-facts"></dl>
+      </div>
+      <div class="about-skills" data-reveal>
+        <div class="skills-head">
+          <p class="block-k">Skills</p>
+          <p class="skills-hint" id="skill-hint"></p>
+        </div>
+        <ul class="skills" id="skill-list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <footer class="contact" id="contact">
+    <p class="block-k">Contact</p>
+    <h2 class="contact-title" data-split>함께 만들 이야기가 있다면</h2>
+    <div class="contact-mail" data-reveal>
+      <a id="mail" href="#">jtt0226@gmaile.com</a>
+      <button id="copy-mail" type="button">주소 복사</button>
+    </div>
+    <ul class="contact-links" data-reveal>
+      <li><a data-link="github" href="#" target="_blank" rel="noopener">GitHub <i>↗</i></a></li>
+      <li><a data-link="resume" href="#" target="_blank" rel="noopener">이력서 및 자기소개서 <i>↗</i></a></li>
+      <!-- <li><a data-link="coverLetter" href="#" target="_blank" rel="noopener">자기소개서 <i>↗</i></a></li> -->
+    </ul>
+    <div class="contact-foot">
+      <p>© <span id="year">2026</span> <span data-bind="nameEn">[YOUR NAME]</span></p>
+      <a href="#hero">맨 위로 ↑</a>
+    </div>
+  </footer>
+</main>
+
+<!-- 서브 프로젝트 미리보기 / 커서 라벨 -->
+<div class="sp-preview" id="sp-preview" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"><span>VIEW</span></div>
+
+<!-- 프로젝트 인트로 모션 -->
+<div class="intro" id="intro" hidden>
+  <div class="intro-motif"></div>
+  <video class="intro-video" muted playsinline hidden></video>
+  <div class="intro-text">
+    <p class="intro-cat"></p>
+    <p class="intro-title"></p>
+  </div>
+  <p class="intro-skip">클릭하면 건너뜁니다</p>
+</div>
+
+<!-- 프로젝트 소개 화면 -->
+<div class="case" id="case" hidden role="dialog" aria-modal="true" aria-label="프로젝트 소개">
+  <button class="case-back" type="button">← 목록으로</button>
+  <div class="case-scroll" data-lenis-prevent>
+    <div class="case-inner" id="case-content"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
