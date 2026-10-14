@@ -50,6 +50,7 @@ export async function openCase(p, origin) {
 export function closeCase() {
   if (!current || busy) return;
   current = null;
+  closeLightbox();
   caseEl.classList.remove('is-open');
   viewer?.dispose();
   viewer = null;
@@ -62,10 +63,29 @@ caseEl.addEventListener('click', (e) => {
   if (e.target.closest('.case-back')) closeCase();
   const next = e.target.closest('[data-next]');
   if (next) openCase(list.find((x) => x.id === next.dataset.next));
+  const shot = e.target.closest('[data-zoom]');
+  if (shot) openLightbox(shot.dataset.zoom, shot.dataset.caption);
+  if (e.target.closest('.lightbox')) closeLightbox();
 });
 addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && current) closeCase();
+  if (e.key !== 'Escape') return;
+  if (caseEl.querySelector('.lightbox')) closeLightbox();
+  else if (current) closeCase();
 });
+
+/* ---------- 이미지 크게 보기 ---------- */
+function openLightbox(src, caption) {
+  closeLightbox();
+  caseEl.insertAdjacentHTML('beforeend', `
+    <div class="lightbox" role="dialog" aria-label="이미지 크게 보기">
+      <img src="${src}" alt="${caption || ''}">
+      ${caption ? `<p>${caption}</p>` : ''}
+      <span class="lightbox-close">닫기 ✕</span>
+    </div>`);
+}
+function closeLightbox() {
+  caseEl.querySelector('.lightbox')?.remove();
+}
 
 /* ---------- 인트로 모션 ---------- */
 function playIntro(p, midway) {
@@ -111,12 +131,23 @@ function playIntro(p, midway) {
 
 /* ---------- 내용 ---------- */
 const tags = (arr) => `<ul class="tags">${arr.map((x) => `<li>${x}</li>`).join('')}</ul>`;
-const points = (arr) => (arr?.length ? `<ul class="cs-points">${arr.map((x) => `<li>${x}</li>`).join('')}</ul>` : '');
+const points = (arr) => {
+  const list = (arr || []).filter((x) => x && x.trim());   // 빈 항목은 표시하지 않음
+  return list.length ? `<ol class="cs-points">${list.map((x) => `<li>${x}</li>`).join('')}</ol>` : '';
+};
+const lead = (text) => (text && text.trim() ? `<p>${text}</p>` : '');
+
+/* 유튜브 주소 전체를 넣어도, 영상 ID만 넣어도 동작 */
+function youtubeId(src) {
+  const m = /(?:youtu\.be\/|v=|embed\/|shorts\/|live\/)([\w-]{11})/.exec(src);
+  return m ? m[1] : src.trim();
+}
 
 function media(p) {
   const v = p.video;
-  if (v?.type === 'youtube' && v.src) {
-    return `<iframe src="https://www.youtube-nocookie.com/embed/${v.src}" title="${p.title} 시연 영상" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>`;
+  if (v?.type === 'youtube') {
+    if (!v.src) return `${motifHTML(p.intro.type)}<figcaption>유튜브 영상 자리 — data.js의 video.src에 유튜브 주소를 넣으세요</figcaption>`;
+    return `<iframe src="https://www.youtube-nocookie.com/embed/${youtubeId(v.src)}" title="${p.title} 영상" allow="accelerometer; gyroscope; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>`;
   }
   if (v?.type === 'file' && v.src) return `<video src="${v.src}" controls playsinline preload="metadata"></video>`;
   if (p.thumb) return `<img src="${p.thumb}" alt="${p.title} 대표 이미지">`;
@@ -132,6 +163,42 @@ function render(p) {
   const idx = String(same.indexOf(p) + 1).padStart(2, '0');
   const next = list[(list.indexOf(p) + 1) % list.length];
   const hasModel = Boolean(p.model || p.placeholderModel);
+  const filled = (x) => Boolean(x && (x.lead?.trim() || (x.points || []).some((t) => t && t.trim())));
+  const hasPS = filled(p.problem) || filled(p.solution);
+
+  const ps = hasPS ? `
+    <section class="cs-sec">
+      <h2 class="cs-label">Problem<br>&amp; Solution</h2>
+      <div class="cs-body cs-ps">
+        <div class="cs-card">
+          <h3>Problem</h3>
+          ${lead(p.problem.lead)}
+          ${points(p.problem.points)}
+        </div>
+        <div class="cs-card is-solution">
+          <h3>Solution</h3>
+          ${lead(p.solution.lead)}
+          ${points(p.solution.points)}
+        </div>
+      </div>
+    </section>` : '';
+
+  // 캐릭터 시트 · 일러스트 이미지
+  const gallery = p.gallery?.length ? `
+    <section class="cs-sec">
+      <h2 class="cs-label">${p.galleryTitle || 'Artwork'}</h2>
+      <div class="cs-body">
+        <div class="gallery">
+          ${p.gallery.map((g) => (g.src
+            ? `<button class="shot${g.wide ? ' is-wide' : ''}" type="button" data-zoom="${g.src}" data-caption="${g.caption || ''}">
+                 <img src="${g.src}" alt="${g.caption || ''}" loading="lazy">
+                 ${g.caption ? `<span>${g.caption}</span>` : ''}
+               </button>`
+            : `<div class="shot is-empty${g.wide ? ' is-wide' : ''}"><span>${g.caption || '이미지'}</span><small>data.js → gallery에 png 경로</small></div>`)).join('')}
+        </div>
+        <p class="cs-note">이미지를 누르면 크게 볼 수 있습니다.</p>
+      </div>
+    </section>` : '';
 
   content.innerHTML = `
     <header class="cs-hero">
@@ -152,21 +219,7 @@ function render(p) {
       <div class="cs-body"><p class="cs-lead">${p.overview}</p></div>
     </section>
 
-    <section class="cs-sec">
-      <h2 class="cs-label">Problem<br>&amp; Solution</h2>
-      <div class="cs-body cs-ps">
-        <div class="cs-card">
-          <h3>Problem</h3>
-          <p>${p.problem.lead}</p>
-          ${points(p.problem.points)}
-        </div>
-        <div class="cs-card is-solution">
-          <h3>Solution</h3>
-          <p>${p.solution.lead}</p>
-          ${points(p.solution.points)}
-        </div>
-      </div>
-    </section>
+    ${ps}
 
     <section class="cs-sec">
       <h2 class="cs-label">Skills</h2>
@@ -175,6 +228,8 @@ function render(p) {
         <div><h3>사용 툴</h3>${tags(p.tools)}</div>
       </div>
     </section>
+
+    ${gallery}
 
     ${hasModel ? `
     <section class="cs-sec">

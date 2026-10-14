@@ -392,6 +392,19 @@ img, video { display: block; max-width: 100%; }
 @keyframes const-draw { 40%, 85% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
 .m-const-dot { fill: var(--accent); }
 
+/* 수평선: 섬, 해, 잔물결 (쉼) */
+.m-sun { fill: color-mix(in srgb, var(--accent) 35%, var(--bg)); animation: sun-breathe 6s ease-in-out infinite; }
+@keyframes sun-breathe { 50% { transform: translateY(-6px); } }
+.m-island { fill: color-mix(in srgb, var(--accent) 70%, var(--ink)); }
+.m-island.far { fill: color-mix(in srgb, var(--accent) 40%, var(--bg)); }
+.m-sea { fill: color-mix(in srgb, var(--accent) 22%, var(--bg)); }
+.m-ripple path { fill: none; stroke: var(--accent); stroke-width: 1.4; stroke-linecap: round; }
+.m-ripple { animation: ripple 9s linear infinite; }
+.m-ripple.r1 { --shift: -120px; opacity: 0.35; }
+.m-ripple.r2 { --shift: -160px; opacity: 0.55; animation-duration: 11s; }
+.m-ripple.r3 { --shift: -200px; opacity: 0.8; animation-duration: 13s; }
+@keyframes ripple { to { transform: translateX(var(--shift)); } }
+
 /* ---------- 프로젝트 인트로 ---------- */
 .intro {
   position: fixed; inset: 0; z-index: 100;
@@ -431,7 +444,7 @@ img, video { display: block; max-width: 100%; }
   transition: background 0.3s, color 0.3s;
 }
 .case-back:hover { background: var(--ink); color: var(--bg); }
-.case-inner { max-width: 1240px; margin-inline: auto; padding: 0 var(--gutter) clamp(60px, 10vh, 120px); }
+.case-inner { max-width: 1360px; margin-inline: auto; padding: 0 var(--gutter) clamp(60px, 10vh, 120px); }
 
 .cs-hero { display: grid; gap: 22px; padding-top: clamp(120px, 22vh, 220px); padding-bottom: clamp(48px, 8vh, 80px); }
 .cs-kicker { font-size: 14px; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; color: var(--accent); }
@@ -446,7 +459,7 @@ img, video { display: block; max-width: 100%; }
 .cs-media figcaption { position: absolute; left: 20px; bottom: 16px; font-size: 13px; opacity: 0.7; }
 
 .cs-sec {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 24px;
+  display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 4fr); gap: 24px;
   padding-top: clamp(28px, 4vh, 40px);
   margin-top: clamp(56px, 9vh, 96px);
   border-top: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
@@ -462,9 +475,16 @@ img, video { display: block; max-width: 100%; }
 .cs-card h3 { font-size: 14px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; opacity: 0.7; }
 .cs-card > p { font-size: clamp(1.05rem, 1.5vw, 1.25rem); font-weight: 600; line-height: 1.5; }
 .cs-card.is-solution { background: var(--accent); color: var(--bg); }
-.cs-points { display: grid; gap: 10px; }
-.cs-points li { position: relative; padding-left: 18px; font-size: 15px; line-height: 1.6; }
-.cs-points li::before { content: ''; position: absolute; left: 0; top: 0.75em; width: 8px; height: 1.5px; background: currentColor; }
+/* 문제 01 ↔ 해결 01 처럼 번호로 짝을 맞춤 */
+.cs-points { list-style: none; margin: 4px 0 0; padding: 0; display: grid; counter-reset: pt; }
+.cs-points li {
+  counter-increment: pt;
+  display: grid; grid-template-columns: 2.2em minmax(0, 1fr); gap: 4px;
+  padding-block: 14px;
+  border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  font-size: 16px; font-weight: 500; line-height: 1.7;
+}
+.cs-points li::before { content: counter(pt, decimal-leading-zero); font-size: 13px; font-weight: 700; line-height: 1.95; opacity: 0.6; }
 .cs-skills { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
 .cs-skills h3 { font-size: 14px; font-weight: 600; opacity: 0.6; margin-bottom: 14px; }
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -473,7 +493,7 @@ img, video { display: block; max-width: 100%; }
 .viewer {
   position: relative; aspect-ratio: 16 / 9; max-width: 100%;
   border-radius: 22px; overflow: hidden;
-  background: radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%), color-mix(in srgb, var(--ink) 6%, transparent);
+  background: rgb(44, 38, 78);
 }
 .viewer canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; touch-action: none; }
 .viewer canvas:active { cursor: grabbing; }
@@ -499,6 +519,46 @@ img, video { display: block; max-width: 100%; }
 .cs-next-c { font-size: 15px; font-weight: 600; color: var(--n-accent); transition: letter-spacing 0.5s var(--ease); }
 .cs-next:hover .cs-next-c { letter-spacing: 0.04em; }
 
+/* ---------- 캐릭터 시트 · 일러스트 갤러리 ---------- */
+.gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.shot {
+  position: relative; display: block; width: 100%;
+  aspect-ratio: 4 / 3; max-width: 100%;
+  border-radius: 18px; overflow: hidden;
+  background: color-mix(in srgb, var(--ink) 6%, var(--bg));
+  cursor: zoom-in;
+}
+.shot.is-wide { grid-column: span 2; aspect-ratio: auto; }
+.shot img { width: 100%; height: 100%; object-fit: contain; padding: 14px; transition: transform 0.6s var(--ease); }
+.shot:hover img { transform: scale(1.04); }
+.shot > span {
+  position: absolute; left: 14px; bottom: 12px;
+  padding: 6px 10px; border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  font-size: 13px; font-weight: 600;
+}
+.shot.is-empty {
+  display: grid; place-content: center; justify-items: center; gap: 6px; text-align: center;
+  border: 1.5px dashed color-mix(in srgb, var(--ink) 25%, transparent);
+  background: transparent; cursor: default;
+}
+.shot.is-empty.is-wide { aspect-ratio: 8 / 3; }
+.shot.is-empty > span { position: static; padding: 0; background: none; font-size: 15px; }
+.shot.is-empty small { font-size: 12px; opacity: 0.55; }
+
+.lightbox {
+  position: fixed; inset: 0; z-index: 5;
+  display: grid; place-items: center; align-content: center; gap: 14px;
+  padding: 48px var(--gutter);
+  background: color-mix(in srgb, var(--bg) 92%, black);
+  cursor: zoom-out;
+  animation: fade-in 0.3s var(--ease);
+}
+.lightbox img { max-width: 100%; max-height: 80vh; object-fit: contain; border-radius: 12px; }
+.lightbox p { font-size: 14px; font-weight: 600; opacity: 0.8; }
+.lightbox-close { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 22px); right: var(--gutter); font-size: 14px; font-weight: 600; opacity: 0.7; }
+@keyframes fade-in { from { opacity: 0; } }
+
 /* ---------- 반응형 ---------- */
 @media (max-width: 760px) {
   .hero-title { font-size: 13vw; }
@@ -508,6 +568,7 @@ img, video { display: block; max-width: 100%; }
   .about-grid { grid-template-columns: minmax(0, 1fr); }
   .cs-sec { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   .cs-ps, .cs-skills { grid-template-columns: minmax(0, 1fr); }
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cs-meta { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .mp-word { font-size: 22vw; }
 }

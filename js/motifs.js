@@ -74,6 +74,19 @@ export function motifHTML(type) {
         </svg>
       </div>`;
 
+    case 'horizon':   // 섬이 떠 있는 잔잔한 바다와 해
+      return `<div class="motif m-horizon">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <circle class="m-sun" cx="270" cy="128" r="30"/>
+          <path class="m-island far" d="M40 170 Q70 150 95 160 Q120 140 150 170 Z"/>
+          <path class="m-island" d="M210 170 Q240 132 270 150 Q300 128 340 170 Z"/>
+          <rect class="m-sea" x="0" y="170" width="400" height="130"/>
+          <g class="m-ripple r1"><path d="${wavePath(198, 2.5, 60).replace(/ L800 320 L0 320 Z$/, '')}"/></g>
+          <g class="m-ripple r2"><path d="${wavePath(230, 3, 80).replace(/ L800 320 L0 320 Z$/, '')}"/></g>
+          <g class="m-ripple r3"><path d="${wavePath(266, 3.5, 100).replace(/ L800 320 L0 320 Z$/, '')}"/></g>
+        </svg>
+      </div>`;
+
     default:
       return `<div class="motif"></div>`;
   }
