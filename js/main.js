@@ -269,7 +269,11 @@
   pts.forEach(b => b.addEventListener('click', () => scrollToPage(+b.dataset.page)));
   $('logo').addEventListener('click', () => scrollToPage(0));
   $('scrim').addEventListener('click', closeMenu);
-  addEventListener('keydown', e => { if (e.key === 'Escape') viewing ? (kb = true, leaveView()) : closeMenu(); });
+  addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    if (!$('lightbox').hidden) $('lightbox').hidden = true;   // a big image closes first, then the page
+    else viewing ? (kb = true, leaveView()) : closeMenu();
+  });
 
   /* ---------- Projects ----------
      Edit the project text here; the labels, list rows and project pages are all filled from it.
@@ -281,8 +285,64 @@
       roles: ['3D 에셋 모델링', 'UI/UX 디자인', 'Unity UI 구현 및 기능 연동', '프로젝트 소개 영상 제작'],
       tools: ['Blender', 'Unity', 'C#', 'After Effects'],
       link: 'https://day-n2375.github.io/jaltayo_vr/', linkLabel: '프로젝트 보기',
-      model: 'bus1.glb', modelNote: '직접 모델링해 게임에 사용한 버스예요. 드래그해서 돌려 보세요.',
+      model: 'bus1.glb', modelNote: '직접 모델링해 게임에 사용한 버스입니다. 드래그해서 돌려 볼 수 있습니다.',
+      modelView: { minAz: 0, maxAz: 180 },   // front → right side → back; the unfinished left side stays hidden
       video: 'jaltayo-intro.mp4',
+      story: [
+        { en: 'Planning', ko: '기획',
+          lead: '어린이가 처음 혼자 버스를 탈 때 겪는 어려움에서 출발한 프로젝트입니다.',
+          blocks: [
+            { type: 'cards', items: [
+              { h: '“버스를 혼자 타기 무서워요”', p: '처음 혼자 타는 버스에 대한 막연한 두려움' },
+              { h: '“카드를 태그하는 게 어려워요”', p: '승차할 때와 내릴 때의 결제 방법' },
+              { h: '“하차벨은 언제 눌러야 하나요?”', p: '내려야 할 정류장을 알아차리는 순간' },
+              { h: '“환승은 어떻게 하는 건가요?”', p: '버스를 갈아타는 낯선 과정' }] },
+            { type: 'text', title: '게임의 목표', paras: [
+              '아이들이 실제 버스 승하차 과정을 VR 안에서 그대로 경험해 볼 수 있도록 설계했습니다.',
+              '“어린이도 걱정 없이”, “실제 버스와 같은 생생함”, “단계별 튜토리얼 구조” 세 가지를 핵심 방향으로 잡았습니다.'] },
+            { type: 'steps', items: [
+              { h: '조작 익히기', p: '튜토리얼에서 컨트롤러 스틱으로 이동하고, 뒤쪽 스위치로 카드를 집는 법을 배웁니다.' },
+              { h: '미션 확인', p: '“현재 정류장에서 버스를 타고, 두 정거장 뒤에 하차하세요!” 같은 미션을 받습니다.' },
+              { h: '탑승과 카드 태그', p: '노선을 확인하고 버스에 오른 뒤, 카드를 태그합니다.' },
+              { h: '알맞은 정류장에 하차', p: '목적지 정류장에서 내리면 미션 성공입니다.' }] }
+          ] },
+        { en: 'Design', ko: '2D 디자인',
+          lead: 'Illustrator로 로고, 튜토리얼 UI, 2D 일러스트를 직접 디자인했습니다. 손 스케치에서 시작해 여러 시안을 비교하며 다듬었습니다.',
+          blocks: [
+            { type: 'gallery', cols: 2, items: [
+              { src: 'images/jaltayo/ai-sketch-logo.webp', tag: '스케치 → 시안', cap: '손 스케치와 로고·UI 시안을 한 보드에 모아 비교한 작업 화면' },
+              { src: 'images/jaltayo/logo-variants.jpg', tag: '로고', cap: '“잘타요” 로고 시안 — 파란 버전과 주황 버전' },
+              { src: 'images/jaltayo/ui-color-variants.jpg', tag: 'UI 컬러', cap: '튜토리얼 UI 컬러 시안 6종' },
+              { src: 'images/jaltayo/ai-tutorial-ui.webp', tag: '튜토리얼 UI', cap: '게임 방법 · 조작 방법 · 미션 카드 UI 작업 화면' },
+              { src: 'images/jaltayo/ai-illustrations.webp', tag: '일러스트', cap: '캐릭터, 버스, 정류장, 리서치 자료까지 2D 그래픽 작업 화면' },
+              { src: 'images/jaltayo/bus-illust.jpg', tag: '일러스트', cap: '2D 버스와 정류장 일러스트' }] }
+          ] },
+        { en: '3D Modeling', ko: '3D 모델링',
+          lead: '게임 속 도시와 버스, 정류장을 Blender로 직접 모델링했습니다. 도로와 횡단보도 배치부터 설계한 뒤 건물을 올렸습니다.',
+          blocks: [
+            { type: 'gallery', cols: 2, items: [
+              { src: 'images/jaltayo/map-top.webp', tag: '맵 설계', cap: '위에서 본 도시 맵 — 도로, 횡단보도, 건물 자리 배치' },
+              { src: 'images/jaltayo/city-3d.webp', tag: '도시', cap: '건물을 올려 완성한 도시 맵' },
+              { src: 'images/jaltayo/buses-color.jpg', tag: '버스', cap: '노선 번호로 구분한 버스 3종 (53 · 02 · 302)' },
+              { src: 'images/jaltayo/bus-stop.webp', tag: '정류장', cap: '노선도가 들어간 버스 정류장과 표지판' }] }
+          ] },
+        { en: 'In Unity', ko: 'Unity 구현',
+          lead: '디자인한 UI를 이미지로 넘기는 데서 끝내지 않고, Unity에 직접 넣어 C#으로 VR 안에서 작동하도록 연결했습니다.',
+          blocks: [
+            { type: 'gallery', cols: 2, items: [
+              { src: 'images/jaltayo/vr-tutorial-sky.jpg', tag: 'VR UI', cap: 'VR 안에 띄운 조작 방법 튜토리얼 — 컨트롤러 레이로 버튼을 누릅니다' },
+              { src: 'images/jaltayo/vr-tutorial-city.jpg', tag: 'VR UI', cap: '직접 모델링한 도시 위에서 보이는 튜토리얼 UI' }] }
+          ] },
+        { en: 'Motion', ko: '소개 영상',
+          lead: '완성된 게임은 After Effects로 소개 영상을 만들어, 기획 의도와 체험 과정을 전달했습니다.',
+          blocks: [
+            { type: 'gallery', cols: 1, items: [
+              { src: 'images/jaltayo/research.jpg', tag: '영상 소스', cap: '소개 영상에 쓰기 위해 직접 만든 그래픽 소스입니다. 맞벌이 가구 수 추이 그래프(국가데이터처 지역별 고용조사)와 아이들의 고민을 담은 말풍선을 디자인했습니다.' }] },
+            { type: 'gallery', cols: 2, items: [
+              { src: 'images/jaltayo/ae-structure.webp', tag: '키 메시지', cap: '“어린이도 걱정 없이!” · “실제 버스와 같은 생생함” · “단계별 튜토리얼 구조”' },
+              { src: 'images/jaltayo/ae-scenario.webp', tag: '플레이 장면', cap: '실제 플레이 화면 위에 단계별 설명을 얹은 장면 (튜토리얼 및 시나리오 1)' }] }
+          ] }
+      ],
       tsLead: 'Blender → Unity → VR로 옮기며 생긴 문제를, 원인을 찾아 하나씩 해결했습니다.',
       ts: [
         { p: 'Blender에서 작업한 모델을 Unity로 옮기는 과정에서 모델에 적용한 색상이 사라졌습니다.',
@@ -301,6 +361,71 @@
       roles: ['게임 기획', '아트 · UI 디자인', '웹 개발', '기획부터 구현까지 전 과정 단독 수행'],
       tools: ['HTML', 'CSS', 'JavaScript', 'Illustrator'],
       link: 'https://porttown-github-io.onrender.com', linkLabel: '게임 해보기',
+      story: [
+        { en: 'Planning', ko: '기획',
+          lead: '해양 환경 오염과 과도한 어업 문제를 주제로, 횡스크롤 이동과 선택지 방식을 합친 게임입니다.',
+          blocks: [
+            { type: 'text', title: '기획 의도', paras: [
+              '개인의 이익을 위한 사소한 선택들이 쌓이면, 환경과 공동체에 큰 영향을 미칠 수 있다는 것을 전하고 싶었습니다.',
+              '악의적인 선택뿐 아니라 “나만 그러는 게 아니니까 괜찮겠지”, “그래도 괜찮겠지” 같은 자기 합리화적인 선택이 모여 좋지 않은 결과를 만든다는 메시지입니다.'] },
+            { type: 'cards', items: [
+              { h: '두 개의 선택지', p: '도덕적이지 못한 선택지와 비교적 덜 부도덕한 선택지 중 반드시 하나를 골라야 하고, 결과는 둘 다 같습니다.' },
+              { h: '민심 점수', p: '선택할 때마다 주민들의 민심 점수가 오르내려, 내가 고른 해결책이 마을에 어떤 영향을 줬는지 보여줍니다.' },
+              { h: '정해진 결말', p: '어떤 선택을 해도 결말은 같습니다. 덜 나쁜 선택도 결국 공동체와 환경에 올바른 선택이 될 수 없다는 의미를 남깁니다.' }] },
+            { type: 'steps', items: [
+              { h: '초반 — 평화로운 마을', p: '플레이어는 새로 부임한 이장이 되어 마을의 사소한 갈등을 해결합니다. 선택이 가볍고, 민심 게이지가 점점 올라갑니다.' },
+              { h: '중반 — 커지는 욕심', p: '어업으로 이익을 얻은 주민들이 과도한 어업을 하려 하고, 쓰레기와 폐수를 바다에 버리는 선택이 이어집니다.' },
+              { h: '후반 — 무너지는 바다', p: '물고기가 줄고 바다가 오염되어 손님이 끊기고, 주민들은 생계를 잃습니다. 민심이 바닥으로 떨어지며 게임이 끝납니다.' }] },
+            { type: 'cards', items: [
+              { h: '벤치마킹 · The Walking Dead', p: '선택에 따라 디테일은 바뀌어도 결말은 바꿀 수 없는 구조를 참고했습니다.' },
+              { h: '벤치마킹 · Endling', p: '풍요롭던 자연이 쓰레기로 뒤덮이며 황폐해지는 과정을 시간의 흐름으로 보여주는 연출을 참고했습니다.' }] }
+          ] },
+        { en: 'Design', ko: '디자인',
+          lead: '캐릭터, 배경, UI까지 모든 그래픽을 Illustrator로 직접 그렸습니다.',
+          blocks: [
+            { type: 'gallery', cols: 2, items: [
+              { src: 'images/nyang/title.jpg', tag: '타이틀', cap: '고양이 얼굴과 파도 패턴, 손글씨 로고로 만든 시작 화면' },
+              { src: 'images/nyang/player-sprite.png', tag: '캐릭터', cap: '플레이어(이장) 스프라이트 — 4방향 × 4프레임 걷기 동작' },
+              { src: 'images/nyang/talk-day1.webp', tag: '대화 UI', cap: '주민 NPC와 이장이 대화하는 화면' },
+              { src: 'images/nyang/journal.jpg', tag: '마을 일지', cap: '정책에 도장을 찍고, 주민들의 반응을 확인하는 마을 일지' }] },
+            { type: 'text', title: '작업 과정', paras: [
+              '레퍼런스를 모아 항구의 분위기를 잡은 뒤, 건물과 캐릭터, 대화 장면을 하나씩 Illustrator로 그려 나갔습니다.'] },
+            { type: 'gallery', cols: 1, items: [
+              { src: 'images/nyang/ai-board.webp', tag: '전체 보드', cap: '타이틀, 건물, 레퍼런스, 마을 일지, 결과 화면까지 모아 둔 Illustrator 작업 보드' }] },
+            { type: 'gallery', cols: 2, items: [
+              { src: 'images/nyang/ai-characters.webp', tag: '캐릭터', cap: '플레이어 스프라이트 시트와 주민 NPC 5종 작업 화면' },
+              { src: 'images/nyang/ai-buildings.jpg', tag: '건물', cap: '수산물 가게, 어부 쉼터, 냥냥 민박 등 가게마다 간판과 소품을 따로 그린 항구 건물 에셋' },
+              { src: 'images/nyang/ai-dialogues.webp', tag: '대화 장면', cap: '1일차부터 6일차까지 대화 장면을 날짜별로 배치한 작업 화면' },
+              { src: 'images/nyang/ai-dialogues-zoom.jpg', tag: '대화 장면', cap: '주민마다 다른 캐릭터와 대사로 만든 대화 장면들' }] }
+          ] },
+        { en: 'Mood', ko: '분위기 변화',
+          lead: '이야기가 진행될수록 항구의 모습이 달라집니다. 같은 장소를 세 단계로 다시 그려, 선택의 결과가 화면으로 쌓이게 했습니다.',
+          blocks: [
+            { type: 'gallery', cols: 3, items: [
+              { src: 'images/nyang/bg-0.jpg', tag: '초반', cap: '맑은 바다와 조용한 항구' },
+              { src: 'images/nyang/bg-2.jpg', tag: '중반', cap: '가게가 늘어나며 북적이는 항구' },
+              { src: 'images/nyang/bg-4.jpg', tag: '후반', cap: '오염된 바다와 어두워진 마을' }] }
+          ] },
+        { en: 'Development', ko: '개발',
+          lead: '프레임워크 없이 HTML · CSS · JavaScript로 게임 전체를 구현했습니다.',
+          blocks: [
+            { type: 'cards', items: [
+              { h: '6일간의 이야기', p: '1일차부터 6일차까지 하루 단위로 진행되고, 대화 장면은 모두 38개입니다.' },
+              { h: '데이터로 관리하는 대화', p: '챕터와 NPC, 대화 순서를 하나의 데이터 목록으로 정리해, 코드를 고치지 않고 내용을 바꿀 수 있게 했습니다.' },
+              { h: '어떤 화면에서도 같은 장면', p: '모든 좌표를 1920×1080 하나의 기준으로 두고, 화면 크기에 맞춰 비율을 유지한 채 확대·축소합니다.' }] },
+            { type: 'gallery', cols: 1, items: [
+              { src: 'images/nyang/talk-day6.webp', tag: '6일차', cap: '후반 대화 — 주민들이 마을을 떠나기로 마음먹는 장면' }] }
+          ] },
+        { en: 'Ending', ko: '결과 화면',
+          lead: '선택이 쌓이며 보여주는 결과 화면입니다. 처음엔 모두가 웃지만, 마지막엔 되돌릴 수 없는 결말에 이릅니다.',
+          blocks: [
+            { type: 'gallery', cols: 2, items: [
+              { src: 'images/nyang/result-1.jpg', tag: '01', cap: '어획량 규제를 풀자 물고기가 넘쳐나고, 주민들이 웃습니다' },
+              { src: 'images/nyang/result-2.jpg', tag: '02', cap: '대형 선박을 들이며 마을이 북적이기 시작합니다' },
+              { src: 'images/nyang/result-3.jpg', tag: '03', cap: '그물이 바다 밑바닥까지 긁으며 생명체들이 파괴됩니다' },
+              { src: 'images/nyang/result-4.jpg', tag: '04', cap: '바다는 색을 잃고, 마을의 생명줄도 끊어집니다' }] }
+          ] }
+      ],
       tsLead: '기획 의도와 화면이 어긋나는 순간을 발견하고, 디자인과 코드를 함께 고쳤습니다.',
       ts: [
         { p: '해양오염이라는 주제와 맞지 않게, 게임이 지나치게 밝고 귀여운 분위기로 만들어졌습니다.',
@@ -319,7 +444,7 @@
       roles: ['기획', 'UI · 인터랙션 디자인', '웹 개발'],
       tools: ['Figma', 'HTML', 'CSS', 'JavaScript'],
       link: '', linkLabel: '웹사이트 보기',
-      ts: [], tsEmpty: '지금 제작 중인 프로젝트예요. 완성되면 트러블 슈팅을 추가할게요.'
+      ts: [], tsEmpty: '현재 제작 중인 프로젝트입니다. 완성되면 트러블 슈팅을 추가할 예정입니다.'
     },
     'rockrockrock': {
       no: '02', name: 'ROCKROCKROCK', type: 'Web', year: '2026',
@@ -445,6 +570,7 @@
   const view = $('projView'), pvBack = $('pvBack');
   const behind = [track, document.querySelector('nav'), $('logo'), $('menuBtn')];
   let viewing = null, pushed = false, pendingAt = null, savedY = 0, kb = false;   // kb: closed from the keyboard
+  let returnTo = null;   // a skill's project link the view was opened from, so it closes back onto it
   const make = (tag, cls, text) => Object.assign(document.createElement(tag), { className: cls, textContent: text });
   function renderDetail(I) {
     const facts = [['TEAM', I.team], ['ROLE', I.roles.join(' · ')], ['TOOLS', (I.tools || []).join(' · ')], ['YEAR', I.year]];
@@ -458,15 +584,55 @@
       const card = (cls, k, text) => { const c = make('div', `ts-card ${cls}`); c.append(make('span', 'ts-k', `${k} ${n}`), make('p', 'ts-t', text)); return c; };
       li.append(card('ts-p', 'PROBLEM', t.p), card('ts-s', 'SOLUTION', t.s));
       return li;
-    }) : [make('li', 'ts-empty', I.tsEmpty || '트러블 슈팅 내용을 준비 중이에요.')]));
+    }) : [make('li', 'ts-empty', I.tsEmpty || '트러블 슈팅 내용을 준비 중입니다.')]));
+    renderStory(I.story || []);
   }
+
+  /* The long middle of a project page: sections of text, cards, numbered steps and image galleries (see INFO[...].story). */
+  const STORY_BLOCKS = {
+    text: b => { const d = make('div', 'st-text'); if (b.title) d.append(make('h4', '', b.title)); b.paras.forEach(p => d.append(make('p', '', p))); return d; },
+    cards: b => { const d = make('div', 'st-cards'); b.items.forEach(it => { const c = make('div', 'st-card'); c.append(make('h4', '', it.h), make('p', '', it.p)); d.append(c); }); return d; },
+    steps: b => { const ol = make('ol', 'st-steps'); b.items.forEach(it => { const li = document.createElement('li'); li.append(make('h4', '', it.h), make('p', '', it.p)); ol.append(li); }); return ol; },
+    gallery: b => {
+      const d = make('div', 'st-gallery'); d.style.setProperty('--cols', b.cols || 2);
+      b.items.forEach(it => {
+        const f = document.createElement('figure');
+        const img = Object.assign(document.createElement('img'), { src: it.src, alt: it.cap, loading: 'lazy', decoding: 'async' });
+        const cap = document.createElement('figcaption');
+        if (it.tag) cap.append(make('b', '', it.tag + ' '));
+        cap.append(it.cap);
+        f.append(img, cap); d.append(f);
+      });
+      return d;
+    }
+  };
+  function renderStory(story) {
+    $('pvStory').replaceChildren(...story.map((s, i) => {
+      const sec = make('section', 'st-sec'), head = make('div', 'st-head'), h = make('h3', 'pv-h', s.en);
+      if (s.ko) h.append(make('small', '', s.ko));
+      head.append(make('span', 'st-no', String(i + 1).padStart(2, '0')), h);
+      sec.append(head);
+      if (s.lead) sec.append(make('p', 'st-lead', s.lead));
+      s.blocks.forEach(b => sec.append(STORY_BLOCKS[b.type](b)));
+      return sec;
+    }));
+  }
+  // any story image opens large
+  const lightbox = $('lightbox');
+  $('pvStory').addEventListener('click', e => {
+    const img = e.target.closest('.st-gallery img'); if (!img) return;
+    lightbox.querySelector('img').src = img.src;
+    lightbox.querySelector('figcaption').textContent = img.alt;
+    lightbox.hidden = false;
+  });
+  lightbox.addEventListener('click', () => { lightbox.hidden = true; });
   /* A model you can turn with the mouse: three.js is fetched the first time a page with a model opens. */
   let model3d = null;
   function closeModel() {
     if (model3d) { model3d.stop(); model3d = null; }
     $('pvModel').textContent = '';
   }
-  async function showModel(url) {
+  async function showModel(url, view) {
     closeModel();
     const box = $('pvModel'), mine = {};
     model3d = { stop() { mine.dead = true; } };   // stops a load that is still on its way
@@ -496,30 +662,41 @@
       camera.position.set(1.15, 0.5, 1.4).setLength(r * 2.3);   // three-quarter view from a little above
       const controls = new OrbitControls(camera, renderer.domElement);
       Object.assign(controls, { enableDamping: true, enablePan: false, autoRotate: !reduce, autoRotateSpeed: 1.2, minDistance: r * 0.9, maxDistance: r * 4 });
+      // view: which way round the model may be turned, in degrees (0 = from +Z, 90 = from +X); never from below
+      const rad = Math.PI / 180, lim = view && { min: view.minAz * rad, max: view.maxAz * rad };
+      if (lim) Object.assign(controls, { minAzimuthAngle: lim.min, maxAzimuthAngle: lim.max, minPolarAngle: 0, maxPolarAngle: Math.PI / 2 });
       let raf = 0;
-      const tick = () => { controls.update(); renderer.render(scene, camera); raf = requestAnimationFrame(tick); };
+      const tick = () => {
+        if (lim && controls.autoRotate) {   // swing back and forth between the limits instead of stopping at one
+          const a = controls.getAzimuthalAngle();
+          if (a <= lim.min + 0.02) controls.autoRotateSpeed = -Math.abs(controls.autoRotateSpeed);
+          else if (a >= lim.max - 0.02) controls.autoRotateSpeed = Math.abs(controls.autoRotateSpeed);
+        }
+        controls.update(); renderer.render(scene, camera); raf = requestAnimationFrame(tick);
+      };
       tick();
       const ro = new ResizeObserver(() => { renderer.setSize(W(), H()); camera.aspect = W() / H(); camera.updateProjectionMatrix(); });
       ro.observe(box);
       self.stop = () => { cancelAnimationFrame(raf); ro.disconnect(); controls.dispose(); renderer.dispose(); };
     } catch (err) {
-      if (!mine.dead) box.textContent = '3D 모델을 불러오지 못했어요.';
+      if (!mine.dead) box.textContent = '3D 모델을 불러오지 못했습니다.';
     }
   }
   function openView(P, at) {
     if (!viewing) savedY = scrollY;
     viewing = P;
     const I = P.info;
-    $('pvNo').textContent = [`${P.sub ? 'SUB' : 'MAIN'} PROJECT ${I.no}`, I.type, I.year].filter(Boolean).join(' · ');
-    pvBack.textContent = `\u2190 ${P.sub ? 'Sub' : 'Main'} Projects`;
+    $('pvNo').textContent = [P.sub ? `WORK ${I.no}` : `LEARN BY DOING ${I.no}`, I.type, I.year].filter(Boolean).join(' · ');
+    pvBack.textContent = `\u2190 ${returnTo ? 'Skills' : P.sub ? 'Work' : 'Learn by Doing'}`;
     $('pvTitle').textContent = I.name;
     $('pvDesc').textContent = I.desc;
     renderDetail(I);
-    $('pvModelSec').hidden = !I.model;
+    $('pvMediaSec').hidden = !I.model && !I.video;
+    $('pvModelFig').hidden = !I.model;
+    $('pvVideoFig').hidden = !I.video;
     $('pvModelNote').textContent = I.modelNote || '';
-    if (I.model) showModel(I.model); else closeModel();
+    if (I.model) showModel(I.model, I.modelView); else closeModel();
     const video = $('pvVideo');
-    $('pvVideoSec').hidden = !I.video;
     const clip = I.video && I.video + '#t=1';   // start the still at 1s, past the black first frame
     if (clip) { if (video.getAttribute('src') !== clip) video.src = clip; } else video.removeAttribute('src');
     if (P.sub) {
@@ -549,13 +726,15 @@
     document.documentElement.classList.remove('viewing');
     scrollTo({ top: savedY, behavior: 'instant' });   // back where the project was clicked
     behind.forEach(el => el.inert = false);
-    const o = centreOf(P.mark);   // measured now that the page is back
+    const back = returnTo || P.mark; returnTo = null;
+    const o = centreOf(back);   // measured now that the page is back
     view.style.setProperty('--ox', o.x + 'px'); view.style.setProperty('--oy', o.y + 'px');
     view.classList.remove('open');
     $('pvVideo').pause();
+    $('lightbox').hidden = true;
     closeModel();
     // hand focus back to the project only for keyboard users; a mouse click would leave a focus ring on it
-    if (kb) P.label.focus({ preventScroll: true }); else document.activeElement.blur();
+    if (kb) (back === P.mark ? P.label : back).focus({ preventScroll: true }); else document.activeElement.blur();
     kb = false;
   }
   function leaveView() {
@@ -649,12 +828,53 @@
     requestAnimationFrame(step);
   }
   skills.forEach(R => { drawSkill(R); R.pill.addEventListener('click', () => toggleSkill(R)); });
+
+  // the projects each tool was used in, opening that project's page inside the site
+  skills.forEach(R => {
+    const ids = (R.el.dataset.projects || '').split(/\s+/).filter(id => INFO[id]);
+    if (!ids.length) return;
+    const row = document.createElement('p');
+    row.className = 'sk-projects';
+    ids.forEach(id => {
+      const a = document.createElement('a');
+      a.href = '#' + id; a.textContent = INFO[id].name;
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        returnTo = a; pendingAt = centreOf(a); pushed = true;
+        location.hash = id;
+      });
+      row.append(a);
+    });
+    R.el.append(row);
+  });
   addEventListener('resize', () => skills.forEach(drawSkill));
+
+  /* ---------- Profile → Main projects: the hanging spider paddles its legs while you point at it, drops on a click ---------- */
+  const nextDrop = document.querySelector('.next-drop');
+  const hanger = { legs: [] };
+  nextDrop.querySelector('.nd-spider').append($('skSpider').content.firstElementChild.cloneNode(true));
+  hanger.legs = rigLegs(nextDrop.querySelector('.nd-spider'), { x: 130.5, y: 76 });
+  let hangRaf = 0;
+  function paddle(on, speed = 900) {
+    cancelAnimationFrame(hangRaf);
+    if (!on || reduce) { legPose(hanger, 0, 0); return; }
+    const t0 = performance.now();
+    const f = now => { legPose(hanger, (now - t0) / speed, 0.6); hangRaf = requestAnimationFrame(f); };
+    hangRaf = requestAnimationFrame(f);
+  }
+  nextDrop.addEventListener('pointerenter', () => paddle(true));
+  nextDrop.addEventListener('pointerleave', () => { if (!nextDrop.classList.contains('drop')) paddle(false); });
+  nextDrop.addEventListener('click', () => {
+    nextDrop.classList.add('drop'); paddle(true, 350);   // legs scramble as it falls
+    if (!nextDrop.matches(':focus-visible')) nextDrop.blur();   // no focus ring left behind after a mouse click
+    setTimeout(() => scrollToPage(2), reduce ? 0 : 420);
+    setTimeout(() => { nextDrop.classList.remove('drop'); paddle(false); }, reduce ? 0 : 1600);
+  });
 
   /* ---------- Contact: hovering a link plucks the web and the spider turns and steps toward it ---------- */
   const CONTACT = {
     mail: 'jtt0226@naver.com',
-    resume: 'resume.pdf'   // the PDF in this folder
+    resume: '이력서.pdf'   // the PDF in this folder
   };
   const ctSvg = document.querySelector('.ct-web svg');
   const ct = {
@@ -696,14 +916,20 @@
       const ok = document.execCommand('copy'); ta.remove(); return ok;
     }
   }
-  const mail = $('ctMail'), resume = $('ctResume');
-  mail.title = `${CONTACT.mail} · 클릭하면 복사돼요`;
-  mail.setAttribute('aria-label', `메일 주소 복사 (${CONTACT.mail})`);
-  if (CONTACT.resume) Object.assign(resume, { href: CONTACT.resume, target: '_blank', rel: 'noopener' });
-  mail.addEventListener('click', async () => {
-    toast(await copyText(CONTACT.mail) ? `메일 주소를 복사했어요 · ${CONTACT.mail}` : CONTACT.mail);
+  // Mail on the contact web and the address in the profile both copy it; both resume links open the PDF.
+  const resume = $('ctResume');
+  document.querySelectorAll('.copy-mail').forEach(el => { if (!el.textContent) el.textContent = CONTACT.mail; });
+  [$('ctMail'), ...document.querySelectorAll('.copy-mail')].forEach(el => {
+    el.title = `${CONTACT.mail} · 클릭하면 복사됩니다`;
+    el.setAttribute('aria-label', `메일 주소 복사 (${CONTACT.mail})`);
+    el.addEventListener('click', async () => {
+      toast(await copyText(CONTACT.mail) ? `메일 주소를 복사했습니다 · ${CONTACT.mail}` : CONTACT.mail);
+    });
   });
-  resume.addEventListener('click', e => { if (!CONTACT.resume) { e.preventDefault(); toast('자기소개서는 준비 중이에요'); } });
+  [resume, ...document.querySelectorAll('.resume-link')].forEach(el => {
+    if (CONTACT.resume) Object.assign(el, { href: CONTACT.resume, target: '_blank', rel: 'noopener' });
+    el.addEventListener('click', e => { if (!CONTACT.resume) { e.preventDefault(); toast('자기소개서는 준비 중입니다'); } });
+  });
   document.querySelectorAll('.ct-link').forEach(el => {
     const near = () => { twang(ct.web, 0.35); ctStep(toward(el)); }, home = () => ctStep({ x: 0, y: 0, r: 0 });
     el.addEventListener('pointerenter', near); el.addEventListener('focus', near);
@@ -739,11 +965,30 @@
     shown = target(); intro.classList.add('ready');
     requestAnimationFrame(loop);
   }
+  /* Right after the typing, scroll down to the profile for the visitor: the tow-away plays exactly as if they
+     had scrolled. Only on arrival; scrolling back up later is theirs. Any wheel, touch or key hands it back at once. */
+  function autoTour() {
+    if (reduce) return;
+    intro.classList.add('auto');   // no "SCROLL" hint while it plays
+    const from = scrollY, to = pages[1].getBoundingClientRect().top + scrollY;   // profile at the top of the screen
+    const t0 = performance.now() + 500, ms = 3000;
+    const evs = ['wheel', 'touchstart', 'keydown', 'mousedown'];
+    let done = false;
+    const finish = () => { if (done) return; done = true; evs.forEach(e => removeEventListener(e, finish)); intro.classList.remove('auto'); };
+    evs.forEach(e => addEventListener(e, finish, { passive: true }));
+    const f = now => {
+      if (done) return;
+      const u = Math.max(0, Math.min(1, (now - t0) / ms));
+      scrollTo(0, from + (to - from) * easeIO(u));
+      if (u < 1) requestAnimationFrame(f); else finish();
+    };
+    requestAnimationFrame(f);
+  }
   async function enter() {
+    // every arrival, reload included, starts from the top so the intro always plays
+    scrollTo(0, 0);
     measure();
     walker.style.visibility = 'visible';
-    // Arriving partway down (a reload), skip the entrance and go straight to scroll control.
-    if (scrollY > 4) { keys.forEach(c => c.classList.add('on')); return begin(); }
     document.documentElement.classList.add('locked');
     const home = introPose();
     if (reduce) { cur = home; apply(cur); pose(0, 0); await typeIn(); return begin(); }
@@ -762,7 +1007,9 @@
     await settle(t);
     await typeIn();
     begin();
+    autoTour();
   }
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';   // a reload must not jump back down the page
   syncHash();   // arriving on a project link opens that project
   (document.fonts ? document.fonts.ready : Promise.resolve()).then(enter);
 })();

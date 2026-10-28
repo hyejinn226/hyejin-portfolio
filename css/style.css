@@ -27,7 +27,7 @@ html.locked, html.locked body { overflow: hidden; }
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
-.page + .page { margin-top: 32vh; }   /* breathing room between pages */
+.page + .page { margin-top: 64vh; }   /* breathing room between pages */
 .page:last-child { margin-bottom: 20vh; }
 .intro + .page { margin-top: -40vh; }  /* the profile slides up under the last of the tow-away instead of after an empty screen */
 
@@ -36,7 +36,7 @@ html.locked, html.locked body { overflow: hidden; }
 .stage { position: sticky; top: 0; height: 100vh; overflow: clip; display: grid; place-items: center; box-sizing: border-box; padding: 24px max(16px, env(safe-area-inset-right, 0px)) 24px max(16px, env(safe-area-inset-left, 0px)); }
 .scroll-hint { position: absolute; left: 50%; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); margin: 0; font: 300 12px var(--font); letter-spacing: 0.12em; color: var(--muted); opacity: 0; transition: opacity 0.8s ease; }
 .ready .scroll-hint { opacity: 1; }
-.ready.moved .scroll-hint { opacity: 0; }
+.ready.moved .scroll-hint, .ready.auto .scroll-hint { opacity: 0; }
 .comp {
   position: relative; container-type: inline-size;
   width: min(55%, calc((100vh - 48px) * 0.55), 640px);
@@ -121,28 +121,59 @@ html.locked, html.locked body { overflow: hidden; }
 .logo:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 4px; }
 
 /* ---------- Profile ---------- */
-.profile-page { display: grid; align-items: center; padding-block: 96px 48px; }
+.profile-page { display: grid; align-items: center; align-content: center; padding-block: 80px 24px; }
 .profile {
   width: 100%; max-width: 1360px; margin: 0 auto; box-sizing: border-box;
-  padding-right: clamp(0px, 9vw, 150px);
-  display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr); gap: clamp(24px, 3.4vw, 52px);
+  padding-left: clamp(0px, 7.4vw, 130px); padding-right: clamp(0px, 9vw, 150px);
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: start;
 }
+/* about a seventh of the screen wide, in the photo's own proportions */
 .photo {
-  aspect-ratio: 460 / 620; max-width: 100%; background: var(--spider);
-  display: grid; place-items: center;
-  color: #FFF3EA; font: 500 13px var(--font); letter-spacing: 0.04em;
+  display: block; width: clamp(160px, 15vw, 240px); height: auto; aspect-ratio: 413 / 531; max-width: 100%;
+  object-fit: cover; background: var(--spider);
 }
-.info { display: flex; flex-direction: column; justify-content: space-between; gap: 40px; padding-block: 8% 0; min-width: 0; }
-.info h2 { margin: 0; font-weight: 300; font-size: clamp(22px, 2.1vw, 36px); line-height: 1.45; letter-spacing: -0.02em; text-wrap: pretty; }
+.info { display: flex; flex-direction: column; justify-content: space-between; gap: 48px; min-width: 0; }
+/* the negative top margin takes off the line's half-leading, so the slogan's letters start level with the photo's top */
+.info h2 { margin: -0.3em 0 0; font-weight: 300; font-size: clamp(22px, 2.1vw, 36px); line-height: 1.6; letter-spacing: -0.02em; text-wrap: pretty; }
 .info h2 strong { font-weight: 800; }
-.facts { margin: 44px 0 0; display: grid; gap: 14px; font-weight: 300; font-size: clamp(16px, 1.3vw, 21px); color: var(--ink-text); }
+.facts { margin: 44px 0 0; display: grid; gap: 20px; font-weight: 300; font-size: clamp(16px, 1.3vw, 21px); color: var(--ink-text); }
 .facts div { display: flex; gap: 6px; }
 .facts dt, .facts dd { margin: 0; }
+/* the address copies on click, same as Mail on the contact page */
+.copy-mail { padding: 0; border: 0; background: none; cursor: pointer; font: inherit; color: inherit; text-decoration: underline 1px; text-underline-offset: 0.2em; }
+.copy-mail:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 4px; }
+.docs { margin: 28px 0 0; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.edu { margin: 0; font-weight: 300; font-size: clamp(15px, 1.2vw, 19px); line-height: 1.6; color: var(--ink-text); }
+.edu { margin: 0; font-weight: 300; font-size: clamp(15px, 1.2vw, 19px); line-height: 1.9; color: var(--ink-text); }
 .edu h3 { margin: 0; font: inherit; }
 .edu ul { list-style: none; margin: 0; padding: 0; }
 .edu time { font-variant-numeric: tabular-nums; }
+.history { display: grid; gap: 28px; }
+/* next: a spider hanging on a thread; its legs are animated from main.js */
+.next-drop {
+  justify-self: center; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  margin-top: clamp(12px, 2vw, 28px); padding: 0 16px 8px; background: none; border: 0; cursor: pointer; color: var(--ink);
+}
+/* The thread stretches and the spider moves with transforms only, so the page never changes height under the reader.
+   Thread: 40px long at rest; hover lets out 18px more, a click 110px. */
+.nd-thread {
+  width: 1.5px; height: 40px; background: var(--spider); transform-origin: top center;
+  transition: scale 0.55s cubic-bezier(.3, 1.6, .5, 1);   /* springs a little, like the thread stretching */
+}
+.next-drop:hover .nd-thread, .next-drop:focus-visible .nd-thread { scale: 1 1.45; }
+.next-drop.drop .nd-thread { scale: 1 3.75; transition: scale 0.45s cubic-bezier(.55, 0, .9, .4); }
+/* the drawing faces right; turned to hang head-down, then nudged so the tip of the abdomen sits on the thread's end */
+.nd-spider {
+  display: block; margin-top: -8px; rotate: 90deg; translate: -2.3px -6.5px;
+  transition: translate 0.55s cubic-bezier(.3, 1.6, .5, 1);
+}
+.next-drop:hover .nd-spider, .next-drop:focus-visible .nd-spider { translate: -2.3px 11.5px; }
+.next-drop.drop .nd-spider { translate: -2.3px 103.5px; transition: translate 0.45s cubic-bezier(.55, 0, .9, .4); }
+.nd-spider svg { display: block; width: 44px; height: auto; overflow: visible; fill: var(--spider); }
+.nd-label { margin-top: 6px; font-weight: 300; font-size: 14px; letter-spacing: 0.04em; transition: translate 0.55s cubic-bezier(.3, 1.6, .5, 1), opacity 0.3s ease; }
+.next-drop:hover .nd-label, .next-drop:focus-visible .nd-label { translate: 0 18px; }
+.next-drop.drop .nd-label { opacity: 0; }
+.next-drop:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 8px; }
 
 /* ---------- Pages still being written ---------- */
 /* Pages rise into place from below as they scroll into view */
@@ -218,7 +249,7 @@ html.viewing { overflow: hidden; }   /* html only: hiding body too clamps the pa
 }
 .pv-back:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 4px; }
 .pv-body {
-  max-width: 1040px; min-height: 100%; margin: 0 auto; box-sizing: border-box; display: grid; align-content: start; gap: clamp(48px, 7vw, 88px);
+  max-width: 1040px; min-height: 100%; margin: 0 auto; box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: clamp(48px, 7vw, 88px);
   padding: 104px max(20px, env(safe-area-inset-right, 0px)) 96px max(20px, env(safe-area-inset-left, 0px));
 }
 .pv-hero { display: grid; justify-items: center; text-align: center; gap: 14px; }
@@ -254,7 +285,55 @@ html.viewing { overflow: hidden; }   /* html only: hiding body too clamps the pa
 }
 .pv-model:active { cursor: grabbing; }
 .pv-model canvas { display: block; width: 100%; height: 100%; }
-.pv-video { display: block; width: 100%; border-radius: 20px; background: #000; }
+.pv-video { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 20px; background: #000; }
+/* model and video: two small panels side by side, stacked on phones */
+.pv-media { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; max-width: 860px; margin: 0 auto; }
+.pv-fig { margin: 0; display: grid; gap: 10px; align-content: start; }
+.pv-fig[hidden] { display: none; }
+.pv-fig figcaption { font-weight: 300; font-size: 13px; line-height: 1.5; color: var(--ink); }
+.pv-fig figcaption b { font-weight: 600; margin-right: 6px; }
+
+/* ---------- Project story: planning, design, making — long and image-rich, like a product detail page ---------- */
+.pv-story { display: grid; gap: clamp(64px, 9vw, 120px); }
+.pv-story:empty { display: none; }
+.st-sec { display: grid; gap: 28px; }
+.st-head { display: grid; gap: 6px; }
+.st-no { font-weight: 500; font-size: 12px; letter-spacing: 0.16em; color: var(--muted); }
+.st-head .pv-h { margin: 0; }
+.st-head .pv-h small { margin-left: 10px; font-size: 0.5em; font-weight: 400; color: var(--ink-text); }
+.st-lead { margin: 0; max-width: 760px; font-weight: 400; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.7; color: var(--ink); }
+.st-text { max-width: 760px; }
+.st-text h4 { margin: 0 0 8px; font-weight: 600; font-size: 16px; color: var(--ink); }
+.st-text p { margin: 0 0 10px; font-weight: 400; font-size: 15px; line-height: 1.8; color: var(--fg); }
+.st-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.st-card { padding: 20px 22px; border: 1.5px solid color-mix(in srgb, var(--ink) 55%, transparent); border-radius: 16px; }
+.st-card h4 { margin: 0 0 8px; font-weight: 600; font-size: 15px; color: var(--ink); }
+.st-card p { margin: 0; font-weight: 400; font-size: 14px; line-height: 1.7; color: var(--fg); }
+.st-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; counter-reset: step; }
+.st-steps li { position: relative; padding: 46px 20px 20px; border-radius: 16px; background: color-mix(in srgb, var(--ink) 8%, var(--bg)); counter-increment: step; }
+.st-steps li::before { content: counter(step, decimal-leading-zero); position: absolute; left: 20px; top: 16px; font-weight: 600; font-size: 13px; letter-spacing: 0.1em; color: var(--ink); }
+.st-steps h4 { margin: 0 0 6px; font-weight: 600; font-size: 15px; color: var(--ink); }
+.st-steps p { margin: 0; font-weight: 400; font-size: 14px; line-height: 1.7; color: var(--fg); }
+.st-gallery { display: grid; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); gap: 16px; }
+.st-gallery figure { margin: 0; display: grid; gap: 10px; align-content: start; }
+.st-gallery img {
+  display: block; width: 100%; height: auto; border-radius: 12px; cursor: zoom-in;
+  background: color-mix(in srgb, var(--ink) 6%, var(--bg)); transition: transform 0.3s ease;
+}
+.st-gallery img:hover { transform: translateY(-2px); }
+.st-gallery figcaption { font-weight: 400; font-size: 13px; line-height: 1.6; color: var(--fg); }
+.st-gallery figcaption b { font-weight: 600; color: var(--ink); }
+@media (max-width: 760px) {
+  .st-gallery { grid-template-columns: minmax(0, 1fr); }
+}
+.lightbox {
+  position: fixed; inset: 0; z-index: 2; margin: 0; padding: 24px; box-sizing: border-box; cursor: zoom-out;
+  display: grid; place-content: center; justify-items: center; gap: 12px;
+  background: color-mix(in srgb, var(--bg) 92%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.lightbox[hidden] { display: none; }
+.lightbox img { max-width: min(1400px, 94vw); max-height: 84vh; border-radius: 12px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); }
+.lightbox figcaption { max-width: 760px; text-align: center; font-size: 14px; line-height: 1.6; color: var(--ink); }
 @media (max-width: 760px) {
   .ts li { grid-template-columns: minmax(0, 1fr); gap: 10px; }
 }
@@ -335,8 +414,14 @@ html.viewing { overflow: hidden; }   /* html only: hiding body too clamps the pa
 }
 .sk-walk { position: absolute; left: 0; top: 50%; width: 0; height: 0; opacity: 0; pointer-events: none; will-change: transform; }
 /* the spider's abdomen sits on the end of the thread */
-.sk-walk svg { position: absolute; left: -14.8px; top: -16.9px; width: 46px; height: auto; overflow: visible; fill: var(--spider); }
-.sk-pct { position: absolute; left: 38px; top: 0; translate: 0 -50%; font-weight: 500; font-size: 13px; color: var(--ink-text); white-space: nowrap; }
+.sk-walk svg { position: absolute; left: -9.65px; top: -11px; width: 30px; height: auto; overflow: visible; fill: var(--spider); }
+.sk-pct { position: absolute; left: 27px; top: 0; translate: 0 -50%; font-weight: 500; font-size: 13px; color: var(--ink-text); white-space: nowrap; }
+/* the projects a tool was used in, under its track */
+.sk-projects { grid-column: 2; margin: -6px 0 4px; display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; }
+.sk-projects a { color: var(--muted); text-decoration: none; transition: color 0.2s ease; }
+.sk-projects a::before { content: '\2197\00a0'; }
+.sk-projects a:hover, .sk-projects a:focus-visible { color: var(--ink-text); }
+.skill:has(.sk-pill[aria-pressed="true"]) .sk-projects a:not(:hover) { color: var(--fg); }
 .sk-note { margin: 14px 0 0; font-weight: 300; font-size: 12px; color: var(--muted); }
 @media (max-width: 760px) {
   .skill { grid-template-columns: 116px minmax(0, 1fr); }
@@ -375,8 +460,8 @@ html.viewing { overflow: hidden; }   /* html only: hiding body too clamps the pa
 }
 
 @media (max-width: 760px) {
-  .profile { grid-template-columns: minmax(0, 1fr); padding-right: 0; }
-  .photo { width: min(62vw, 260px); }
+  .profile { grid-template-columns: minmax(0, 1fr); padding-inline: 0; }
+  .photo { width: min(46vw, 190px); }
   .info { padding-block: 0; }
   .profile-page { align-items: start; }
 }

@@ -12,7 +12,7 @@
 <title>new Web() Portfolio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <!-- ?v=… : bump it whenever style.css or main.js changes, so browsers and GitHub's cache fetch the new file -->
-<link rel="stylesheet" href="css/style.css?v=20261021">
+<link rel="stylesheet" href="css/style.css?v=20261028">
 </head>
 <body>
 
@@ -30,29 +30,46 @@
 
   <section class="page profile-page" id="p1" aria-label="Profile">
     <div class="profile">
-      <div class="photo rise" role="img" aria-label="프로필 사진 자리">[개발자 사진]</div>
+      <img class="photo rise" src="images/photo.jpg" width="413" height="531" alt="정혜진 프로필 사진">
       <div class="info rise">
         <div>
-          <h2>공간을 설계하고 인터랙션으로 완성하는 개발자 <strong>정혜진</strong>입니다.</h2>
+          <h2>한 가닥의 아이디어를 엮어 경험을 설계하는 <strong>정혜진</strong>입니다.</h2>
           <dl class="facts">
             <div><dt>name.</dt><dd>정혜진</dd></div>
             <div><dt class="sr">birth.</dt><dd><time datetime="2005-02-26">2005.02.26</time></dd></div>
+            <div><dt>email.</dt><dd><button class="copy-mail" type="button"></button></dd></div>
           </dl>
+          <p class="docs"><a class="pv-link resume-link" href="#" target="_blank" rel="noopener">이력서 · 자기소개서 PDF ↗</a></p>
         </div>
-        <section class="edu" aria-label="학력">
-          <h3>학력.</h3>
-          <ul>
-            <li><time datetime="2024">2024.</time> 고등학교 검정고시 합격</li>
-            <li><time datetime="2025">2025.</time> 계원예술대학교 입학</li>
-          </ul>
-        </section>
+        <div class="history">
+          <section class="edu" aria-label="학력">
+            <h3>학력.</h3>
+            <ul>
+              <li><time datetime="2025">2025 - 2027</time> 계원예술대학교 디지털미디어디자인학과</li>
+            </ul>
+          </section>
+          <section class="edu" aria-label="활동">
+            <h3>활동.</h3>
+            <ul>
+              <li>학과 영상동아리 DIMO</li>
+              <li><time datetime="2025">2025</time> 졸업준비위원회 영상팀 (촬영 및 편집)</li>
+              <li><time datetime="2026">2026</time> 졸업준비위원회 영상팀 (촬영 팀장)</li>
+            </ul>
+          </section>
+        </div>
       </div>
     </div>
+    <!-- a spider hangs here on its thread: hover lets it down a little, a click drops it and goes on to the main projects -->
+    <button class="next-drop rise" type="button" aria-label="메인 프로젝트로 이동">
+      <span class="nd-thread" aria-hidden="true"></span>
+      <span class="nd-spider" aria-hidden="true"></span>
+      <span class="nd-label">Learn by Doing</span>
+    </button>
   </section>
 
-  <section class="page mp-page" id="p2" aria-label="Main Projects">
+  <section class="page mp-page" id="p2" aria-label="Learn by Doing">
     <div class="mp">
-      <h2 class="mp-title rise">Main Projects</h2>
+      <h2 class="mp-title rise">Learn by Doing</h2>
       <p class="mp-hint rise">// click the web to explore projects</p>
 
       <!-- Artboard main.svg (1920 x 1080). Each web keeps its own drawing units; --x/--y/--w place it on the artboard,
@@ -149,8 +166,8 @@
       </div>
     </div>
   </section>
-  <section class="page sp-page" id="p3" aria-label="Sub Projects">
-    <h2 class="sec-title rise">Sub Projects</h2>
+  <section class="page sp-page" id="p3" aria-label="Work">
+    <h2 class="sec-title rise">Work</h2>
     <!-- text for each row comes from INFO in the script -->
     <ol class="sp-list">
       <li class="sub rise" data-id="phosphate"><a class="sub-link" href="#phosphate">
@@ -175,31 +192,31 @@
       <div class="sk-group rise">
         <h3 class="sk-group-name">프론트엔드</h3>
         <ul class="sk-list">
-          <li class="skill" data-pct="80"><button class="sk-pill" type="button" aria-pressed="false">Web</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
+          <li class="skill" data-pct="80" data-projects="nyangnyang-harbor rockrockrock phosphate"><button class="sk-pill" type="button" aria-pressed="false">Web</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
         </ul>
         <p class="sk-note">Web — JavaScript · CSS · HTML · React</p>
       </div>
       <div class="sk-group rise">
         <h3 class="sk-group-name">3D · 인터랙티브</h3>
         <ul class="sk-list">
-          <li class="skill" data-pct="65"><button class="sk-pill" type="button" aria-pressed="false">Unity</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
-          <li class="skill" data-pct="60"><button class="sk-pill" type="button" aria-pressed="false">C#</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
-          <li class="skill" data-pct="50"><button class="sk-pill" type="button" aria-pressed="false">Blender</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
+          <li class="skill" data-pct="65" data-projects="jaltayo-vr"><button class="sk-pill" type="button" aria-pressed="false">Unity</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
+          <li class="skill" data-pct="60" data-projects="jaltayo-vr"><button class="sk-pill" type="button" aria-pressed="false">C#</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
+          <li class="skill" data-pct="50" data-projects="jaltayo-vr"><button class="sk-pill" type="button" aria-pressed="false">Blender</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
         </ul>
       </div>
       <div class="sk-group rise">
         <h3 class="sk-group-name">디자인</h3>
         <ul class="sk-list">
-          <li class="skill" data-pct="75"><button class="sk-pill" type="button" aria-pressed="false">Illustrator</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
-          <li class="skill" data-pct="70"><button class="sk-pill" type="button" aria-pressed="false">Figma</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
+          <li class="skill" data-pct="75" data-projects="jaltayo-vr nyangnyang-harbor"><button class="sk-pill" type="button" aria-pressed="false">Illustrator</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
+          <li class="skill" data-pct="70" data-projects="phosphate"><button class="sk-pill" type="button" aria-pressed="false">Figma</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
           <li class="skill" data-pct="60"><button class="sk-pill" type="button" aria-pressed="false">Photoshop</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
         </ul>
       </div>
       <div class="sk-group rise">
         <h3 class="sk-group-name">영상</h3>
         <ul class="sk-list">
-          <li class="skill" data-pct="70"><button class="sk-pill" type="button" aria-pressed="false">After Effects</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
-          <li class="skill" data-pct="65"><button class="sk-pill" type="button" aria-pressed="false">Premiere Pro</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
+          <li class="skill" data-pct="70" data-projects="jaltayo-vr"><button class="sk-pill" type="button" aria-pressed="false">After Effects</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
+          <li class="skill" data-pct="65" data-projects="shuim"><button class="sk-pill" type="button" aria-pressed="false">Premiere Pro</button><div class="sk-track"><span class="sk-line"></span><span class="sk-walk"><span class="sk-pct"></span></span></div></li>
         </ul>
       </div>
     </div>
@@ -291,14 +308,14 @@
 <nav aria-label="페이지 메뉴">
   <ul class="menu-list" id="menuList">
     <li><button class="pt" type="button" data-page="1">Profile<span class="dia"></span></button></li>
-    <li><button class="pt" type="button" data-page="2">Main Projects<span class="dia"></span></button></li>
-    <li><button class="pt" type="button" data-page="3">Sub Projects<span class="dia"></span></button></li>
+    <li><button class="pt" type="button" data-page="2">Learn by Doing<span class="dia"></span></button></li>
+    <li><button class="pt" type="button" data-page="3">Work<span class="dia"></span></button></li>
     <li><button class="pt" type="button" data-page="4">Skills<span class="dia"></span></button></li>
     <li><button class="pt" type="button" data-page="5">Contact<span class="dia"></span></button></li>
   </ul>
 </nav>
 <div class="proj-view" id="projView" role="dialog" aria-modal="true" aria-labelledby="pvTitle">
-  <button class="pv-back" id="pvBack" type="button">← Main Projects</button>
+  <button class="pv-back" id="pvBack" type="button">← Learn by Doing</button>
   <div class="pv-body">
     <header class="pv-hero">
       <div class="pv-mark" id="pvMark" aria-hidden="true"></div>
@@ -308,23 +325,31 @@
       <a class="pv-link" id="pvLink" target="_blank" rel="noopener" hidden></a>
     </header>
     <dl class="pv-facts" id="pvFacts"></dl>
+    <!-- planning → design → making, filled from INFO[...].story -->
+    <div class="pv-story" id="pvStory"></div>
+    <!-- model and video sit side by side; troubleshooting comes last -->
+    <section id="pvMediaSec" aria-label="3D 모델과 소개 영상" hidden>
+      <div class="pv-media">
+        <figure class="pv-fig" id="pvModelFig">
+          <div class="pv-model" id="pvModel"></div>
+          <figcaption><b>3D Model</b> <span id="pvModelNote"></span></figcaption>
+        </figure>
+        <figure class="pv-fig" id="pvVideoFig">
+          <video class="pv-video" id="pvVideo" controls playsinline preload="metadata"></video>
+          <figcaption><b>소개 영상</b></figcaption>
+        </figure>
+      </div>
+    </section>
     <section aria-labelledby="pvTsH">
       <h3 class="pv-h" id="pvTsH">Troubleshooting</h3>
       <p class="pv-lead" id="pvTsLead"></p>
       <ol class="ts" id="pvTs"></ol>
     </section>
-    <section id="pvModelSec" aria-labelledby="pvModelH" hidden>
-      <h3 class="pv-h" id="pvModelH">3D Model</h3>
-      <p class="pv-lead" id="pvModelNote"></p>
-      <div class="pv-model" id="pvModel"></div>
-    </section>
-    <section id="pvVideoSec" aria-labelledby="pvVideoH" hidden>
-      <h3 class="pv-h" id="pvVideoH">소개 영상</h3>
-      <video class="pv-video" id="pvVideo" controls playsinline preload="metadata"></video>
-    </section>
   </div>
+  <!-- a process image opened large; click anywhere or press Esc to close -->
+  <figure class="lightbox" id="lightbox" hidden><img alt=""><figcaption></figcaption></figure>
 </div>
 
-<script src="js/main.js?v=20261021"></script>
+<script src="js/main.js?v=20261028"></script>
 </body>
 </html>
