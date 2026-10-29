@@ -441,10 +441,78 @@
       no: '01', name: 'Phosphate', type: 'Interactive Web', year: '2026',
       desc: '모로코의 인산염을 소개하는 인터랙션 웹페이지', team: '개인 프로젝트',
       tags: ['기획', '디자인', '개발'],
-      roles: ['기획', 'UI · 인터랙션 디자인', '웹 개발'],
-      tools: ['Figma', 'HTML', 'CSS', 'JavaScript'],
-      link: '', linkLabel: '웹사이트 보기',
-      ts: [], tsEmpty: '현재 제작 중인 프로젝트입니다. 완성되면 트러블 슈팅을 추가할 예정입니다.'
+      roles: ['콘텐츠 기획', 'UI · 인터랙션 디자인', '웹 개발', '기획부터 구현까지 전 과정 단독 수행'],
+      tools: ['Illustrator', 'Figma', 'HTML', 'CSS', 'JavaScript'],
+      link: 'https://hyejinn226.github.io/phosphate/', linkLabel: '웹사이트 보기',
+      video: 'phosphate-demo.mp4', videoLabel: '시연 영상', videoPoster: 'images/phosphate/intro-70.webp',
+      story: [
+        { en: 'Planning', ko: '기획',
+          lead: '모로코에서 떠오르는 키워드를 마인드맵으로 정리하고, 그중 “인산염”을 주제로 골랐습니다.',
+          blocks: [
+            { type: 'text', title: '주제 선정', paras: [
+              '모로코는 전 세계 인산염 매장량의 약 68%(500억 톤)를 가진 세계 1위 매장국이자, 세계 2위의 생산국입니다.',
+              '인산염은 식량 생산에 꼭 필요한 비료의 핵심 원료입니다. 잘 알려지지 않았지만 우리 일상과 맞닿아 있는 이 자원을 웹사이트로 소개하고자 했습니다.'] },
+            { type: 'gallery', cols: 3, items: [
+              { src: 'images/phosphate/mindmap.webp', tag: '마인드맵', cap: '생활 · 전통 · 산업 · 음식으로 모로코의 키워드를 정리한 마인드맵' },
+              { src: 'images/phosphate/content-plan.webp', tag: '콘텐츠 구성', cap: '원 스크롤 메인 페이지와 여섯 개의 콘텐츠 구성' },
+              { src: 'images/phosphate/moodboard.webp', tag: '무드보드', cap: '인산염의 색을 살려 흑 · 회 · 백의 모노톤으로 통일' }] },
+            { type: 'steps', items: [
+              { h: '모로코 소개', p: '검은 화면이 열리며 인산염이 등장하는 장면으로 웹사이트를 시작합니다.' },
+              { h: '자연과 자원', p: '사진 슬라이드와 돋보기 물방울 인터랙션으로 모로코의 자연과 인산염 자원을 소개합니다.' },
+              { h: '세계 속 모로코', p: '카드뉴스 형식으로 세계 인산염 산업에서 모로코의 위치를 보여줍니다.' },
+              { h: '채굴 과정', p: '스크롤 타임라인과 단계별 아이콘으로 채굴 · 정제 · 이송 · 가공을 설명합니다.' },
+              { h: '가공 과정', p: '가로 스크롤 갤러리와 상세 모달로 가공 과정을 보여줍니다.' },
+              { h: '일상 속 활용', p: '원형 카드를 누르면 서브 페이지로 이동해 일상 속 인산염의 쓰임을 소개합니다.' }] }
+          ] },
+        { en: 'Wireframe', ko: '와이어프레임 · 시안',
+          lead: '와이어프레임 2차와 디자인 시안 3차를 거치며 화면 구성을 다듬었습니다.',
+          blocks: [
+            { type: 'gallery', cols: 2, items: [
+              { src: 'images/phosphate/wireframe-1.webp', tag: '1차 와이어프레임', cap: '로고와 인산염 화학기호 오브젝트를 크게 두고, 내비게이션은 모든 페이지의 우측 하단에 배치' },
+              { src: 'images/phosphate/wireframe-2.webp', tag: '2차 와이어프레임', cap: '광산 이미지 호버, 이미지를 클릭하면 공정 과정 모달이 열리는 구조' }] },
+            { type: 'gallery', cols: 3, items: [
+              { src: 'images/phosphate/draft-1.webp', tag: '1차 시안', cap: '메인과 콘텐츠 페이지 1차 시안' },
+              { src: 'images/phosphate/draft-2.webp', tag: '2차 시안', cap: '메인과 인트로 페이지 2차 시안' },
+              { src: 'images/phosphate/draft-3.webp', tag: '3차 시안', cap: '메인 페이지 3차 시안' }] }
+          ] },
+        { en: 'Design', ko: '디자인',
+          lead: 'Illustrator로 디자인 소스와 여러 버전의 시안을 만들고, 확정된 소스를 Figma로 옮겨 페이지 디자인을 진행했습니다.',
+          blocks: [
+            { type: 'gallery', cols: 2, items: [
+              { src: 'images/phosphate/ai-moodboard.webp', tag: 'Illustrator', cap: '“From beneath” 타이포와 사막 · 동굴 이미지로 분위기를 찾은 시안 작업 화면' },
+              { src: 'images/phosphate/ai-sources.webp', tag: 'Illustrator', cap: '인산염 분자 로고, 원석, 지구본 등 디자인 소스' },
+              { src: 'images/phosphate/figma-frames.webp', tag: 'Figma', cap: '메인 화면의 로고 · 타이포 배치를 여러 버전으로 비교한 프레임' },
+              { src: 'images/phosphate/figma-board.webp', tag: 'Figma', cap: '와이어프레임부터 섹션별 인터랙션 메모까지 담은 페이지 디자인 보드' }] }
+          ] },
+        { en: 'Interaction', ko: '웹 구현',
+          lead: 'Figma로 디자인한 시안을 HTML · CSS · JavaScript로 구현했습니다. 섹션마다 스크롤과 마우스에 반응하는 인터랙션을 넣었습니다.',
+          blocks: [
+            { type: 'gallery', cols: 2, items: [
+              { src: 'images/phosphate/main-logo.webp', tag: '메인', cap: '인산염 분자 로고가 미세하게 진동하고, 배경에 모래 알갱이가 날립니다' },
+              { src: 'images/phosphate/main-copy.webp', tag: '메인', cap: '스크롤하면 로고가 커지며 이동하고 문구가 올라옵니다. 마우스를 대면 로고가 살짝 끌려옵니다' },
+              { src: 'images/phosphate/intro-box.webp', tag: '인트로', cap: '흰 화면에 인산염 이미지가 나타나고, 검은 박스가 가운데에서 커지며 화면을 덮습니다' },
+              { src: 'images/phosphate/intro-70.webp', tag: '인트로', cap: '70% 숫자가 카운트되고, 계속 스크롤하면 흰 화면으로 전환됩니다' },
+              { src: 'images/phosphate/morocco-bubble.webp', tag: '모로코 소개', cap: '드래그로 사진을 넘기고, 떠다니는 물방울이 글자를 돋보기처럼 확대합니다' },
+              { src: 'images/phosphate/card-news.webp', tag: '카드뉴스', cap: '점을 누르거나 드래그하면 흐린 카드가 가운데로 오며 선명해집니다' },
+              { src: 'images/phosphate/mining-1.webp', tag: '채굴 과정', cap: '배경이 검게 바뀌고, 스크롤에 따라 단계와 사진이 바뀝니다' },
+              { src: 'images/phosphate/mining-4.webp', tag: '채굴 과정', cap: '타임라인의 점이 스크롤을 따라 이동하고, 단계 아이콘이 선으로 그려집니다' },
+              { src: 'images/phosphate/processing.webp', tag: '가공 과정', cap: '사진 줄이 가로로 흐르고, 마우스를 올린 사진이 넓어집니다' },
+              { src: 'images/phosphate/processing-modal.webp', tag: '가공 과정', cap: '사진을 누르면 상세 모달이 열리고, 이전 · 다음 단계로 넘길 수 있습니다' },
+              { src: 'images/phosphate/uses.webp', tag: '활용 분야', cap: '마우스를 올리면 원 안에 사진이 차오르고, 누르면 서브 페이지로 이동합니다' },
+              { src: 'images/phosphate/footer.webp', tag: '푸터', cap: '큰 MOROCCO 타이포가 아래에서 올라옵니다' }] }
+          ] },
+        { en: 'AI Images', ko: '이미지 제작',
+          lead: '웹사이트에 들어간 사진 25장은 AI로 만들었습니다. 모든 사진이 하나의 사이트처럼 보이도록 톤을 맞추는 데 집중했습니다.',
+          blocks: [
+            { type: 'steps', items: [
+              { h: '계획', p: '웹사이트에 필요한 사진 25장을 섹션별로 정리했습니다.' },
+              { h: '프롬프트', p: '흑백 · 고대비 · 필름 질감 · 다큐멘터리 사진 느낌 · 글자 없음이라는 공통 스타일을 정해 모든 프롬프트에 붙였습니다.' },
+              { h: '보정', p: '격자로 만든 사진을 칸별로 잘라 흑백과 밝기를 통일하고, 작은 사진은 크게 키워 선명하게 다듬었습니다.' }] },
+            { type: 'gallery', cols: 1, items: [
+              { src: 'images/phosphate/ai-images.webp', tag: '작업 과정', cap: '같은 톤의 흑백 사진 6장을 격자로 만들어, 칸마다 가공 장면을 하나씩 넣은 프롬프트 예시' }] }
+          ] }
+      ],
+      ts: [], tsEmpty: '현재 1차 완성 단계입니다. 최종 완성 후 트러블 슈팅을 추가할 예정입니다.'
     },
     'rockrockrock': {
       no: '02', name: 'ROCKROCKROCK', type: 'Web', year: '2026',
@@ -694,11 +762,13 @@
     $('pvMediaSec').hidden = !I.model && !I.video;
     $('pvModelFig').hidden = !I.model;
     $('pvVideoFig').hidden = !I.video;
+    $('pvVideoLabel').textContent = I.videoLabel || '소개 영상';
     $('pvModelNote').textContent = I.modelNote || '';
     if (I.model) showModel(I.model, I.modelView); else closeModel();
     const video = $('pvVideo');
-    const clip = I.video && I.video + '#t=1';   // start the still at 1s, past the black first frame
+    const clip = I.video && I.video + (I.videoPoster ? '' : '#t=1');   // without a poster, start the still at 1s, past the black first frame
     if (clip) { if (video.getAttribute('src') !== clip) video.src = clip; } else video.removeAttribute('src');
+    if (I.videoPoster) video.poster = I.videoPoster; else video.removeAttribute('poster');
     if (P.sub) {
       $('pvMark').replaceChildren(Object.assign(document.createElement('img'), { src: P.mark.querySelector('img').src, alt: '' }));
     } else {

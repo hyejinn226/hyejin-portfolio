@@ -319,6 +319,7 @@ html.viewing { overflow: hidden; }   /* html only: hiding body too clamps the pa
 .st-gallery img {
   display: block; width: 100%; height: auto; border-radius: 12px; cursor: zoom-in;
   background: color-mix(in srgb, var(--ink) 6%, var(--bg)); transition: transform 0.3s ease;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--fg) 10%, transparent);   /* keeps white screenshots off the white page */
 }
 .st-gallery img:hover { transform: translateY(-2px); }
 .st-gallery figcaption { font-weight: 400; font-size: 13px; line-height: 1.6; color: var(--fg); }
