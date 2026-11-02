@@ -129,7 +129,7 @@ html.locked, html.locked body { overflow: hidden; }
 }
 /* about a seventh of the screen wide, in the photo's own proportions */
 .photo {
-  display: block; width: clamp(160px, 15vw, 240px); height: auto; aspect-ratio: 413 / 531; max-width: 100%;
+  display: block; width: clamp(160px, 15vw, 240px); height: auto; aspect-ratio: 4 / 5; max-width: 100%;
   object-fit: cover; background: var(--spider);
 }
 .info { display: flex; flex-direction: column; justify-content: space-between; gap: 48px; min-width: 0; }
