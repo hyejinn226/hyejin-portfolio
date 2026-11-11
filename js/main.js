@@ -106,10 +106,10 @@
       let i = 0;
       const next = () => {
         keys[i++].classList.add('on');
-        if (i < keys.length) setTimeout(next, 80 + Math.random() * 90);
+        if (i < keys.length) setTimeout(next, 55 + Math.random() * 60);
         else { intro.classList.add('typed'); res(); }
       };
-      setTimeout(next, 450);
+      setTimeout(next, 250);
     });
   }
 
@@ -345,14 +345,37 @@
       ],
       tsLead: 'Blender → Unity → VR로 옮기며 생긴 문제를, 원인을 찾아 하나씩 해결했습니다.',
       ts: [
-        { p: 'Blender에서 작업한 모델을 Unity로 옮기는 과정에서 모델에 적용한 색상이 사라졌습니다.',
-          s: 'Unity에서 적용될 수 있도록 Export 설정을 변경하고, Unity에서 다시 확인하며 적용되지 않은 부분은 직접 다시 적용했습니다.' },
-        { p: 'VR 화면에서 안내 메시지 UI가 거울처럼 180도 뒤집혀 보였습니다.',
-          s: '스크립트에서 카메라를 바라보는 방향을 계산한 뒤 Y축 회전을 180도 보정해, UI가 항상 정면을 보도록 수정했습니다.' },
-        { p: 'VR 컨트롤러로 UI를 눌러도 클릭 이벤트가 반응하지 않았습니다.',
-          s: 'Canvas의 Scale을 VR 표준인 0.001 수준으로 맞추고 Pos Z 위치를 미세 조정해, 물리 충돌 간섭 문제를 해결했습니다.' },
-        { p: '모니터에서는 잘 보이던 UI가 VR 화면 안에서는 너무 작거나 가까워 잘 보이지 않았습니다.',
-          s: 'UI의 크기, 거리, 배치를 바꿔 가며 직접 기기를 착용하고 테스트하기를 반복해, 어린이의 시선에서도 편하게 읽히는 위치를 찾았습니다.' }
+        { title: 'Blender에서 칠한 색이 Unity에서 사라졌습니다',
+          story: [
+            'Blender에서 도시와 버스, 정류장을 모델링하고 색까지 입힌 뒤 Unity로 옮겼습니다. 그런데 Unity에서 열어 보니 모델에 적용한 색상이 빠져 있었습니다. 노선 번호로 버스를 구분하는 게임이라, 색이 없으면 플레이 자체가 성립하지 않았습니다.',
+            '원인은 내보내기 과정에 있었습니다. Blender에서 보이던 색이 Unity가 읽을 수 있는 형태로 함께 넘어가지 않았던 것입니다. 그래서 Unity에서 적용될 수 있도록 Export 설정을 바꿔 다시 내보냈습니다.',
+            '설정을 바꾼 뒤에도 모든 부분이 한 번에 돌아오지는 않았습니다. Unity에서 모델을 하나씩 확인하며, 적용되지 않은 부분은 직접 다시 색을 입혀 마무리했습니다.',
+            { cols: 2, items: [
+              { src: 'images/jaltayo/city-3d.webp', tag: '도시', cap: 'Unity로 옮긴 뒤 색을 다시 확인한 도시 맵' },
+              { src: 'images/jaltayo/buses-color.jpg', tag: '버스', cap: '노선 번호로 구분되도록 색을 되살린 버스 3종' }] }
+          ] },
+        { title: 'VR 안에서 안내 메시지가 거울처럼 뒤집혀 보였습니다',
+          story: [
+            '모니터로 볼 때는 문제가 없던 안내 메시지가, 기기를 쓰고 VR 안에서 보니 글자가 거울에 비친 것처럼 180도 뒤집혀 있었습니다. 아이들이 읽어야 하는 미션 안내라 그대로 둘 수 없었습니다.',
+            'UI가 플레이어의 카메라를 바라보도록 만들었는데, 이 방향 계산이 UI의 앞면이 아니라 뒷면을 카메라 쪽으로 돌리고 있었습니다. 스크립트에서 카메라를 바라보는 방향을 계산한 뒤 Y축 회전을 180도 보정해, UI가 항상 정면으로 보이도록 고쳤습니다.',
+            { cols: 1, items: [
+              { src: 'images/jaltayo/vr-tutorial-sky.jpg', tag: '수정 후', cap: '플레이어를 정면으로 바라보도록 고친 VR 안내 UI' }] }
+          ] },
+        { title: '컨트롤러로 버튼을 눌러도 아무 반응이 없었습니다',
+          story: [
+            '튜토리얼 UI가 화면에는 잘 보였지만, VR 컨트롤러로 버튼을 가리키고 눌러도 클릭 이벤트가 반응하지 않았습니다. 화면은 완성됐는데 다음 단계로 넘어갈 수가 없었습니다.',
+            '확인해 보니 Canvas의 크기와 위치가 VR 환경에 맞지 않아, 컨트롤러의 레이와 버튼 사이에 물리 충돌 간섭이 생기고 있었습니다. Canvas의 Scale을 VR 표준인 0.001 수준으로 맞추고, Pos Z 위치를 조금씩 옮겨 가며 버튼이 정확히 눌리는 지점을 찾았습니다.',
+            { cols: 1, items: [
+              { src: 'images/jaltayo/vr-tutorial-city.jpg', tag: '수정 후', cap: '컨트롤러 레이로 버튼을 누를 수 있게 된 튜토리얼 UI' }] }
+          ] },
+        { title: '모니터에서 맞춘 UI가 VR에서는 읽히지 않았습니다',
+          story: [
+            'Illustrator로 디자인한 튜토리얼 UI는 모니터에서 보기 좋게 맞춰져 있었습니다. 하지만 VR 안에서는 너무 작거나, 눈앞에 너무 가까이 떠 있어 읽기 어려웠습니다.',
+            '정답이 되는 수치가 따로 없어서, 직접 부딪쳐 보는 수밖에 없었습니다. UI의 크기와 거리, 배치를 조금씩 바꾸고, 그때마다 기기를 직접 쓰고 확인하기를 반복했습니다. 그렇게 어린이의 시선에서도 편하게 읽히는 위치를 찾았습니다.',
+            { cols: 2, items: [
+              { src: 'images/jaltayo/ai-tutorial-ui.webp', tag: '디자인', cap: '모니터 기준으로 디자인한 튜토리얼 UI 작업 화면' },
+              { src: 'images/jaltayo/vr-tutorial-sky.jpg', tag: 'VR 안', cap: '크기와 거리를 다시 맞춘 VR 속 튜토리얼 UI' }] }
+          ] }
       ]
     },
     'nyangnyang-harbor': {
@@ -428,12 +451,29 @@
       ],
       tsLead: '기획 의도와 화면이 어긋나는 순간을 발견하고, 디자인과 코드를 함께 고쳤습니다.',
       ts: [
-        { p: '해양오염이라는 주제와 맞지 않게, 게임이 지나치게 밝고 귀여운 분위기로 만들어졌습니다.',
-          s: '이야기가 후반부에 들어서면 배경을 어두운 장면으로 바꾸고, 밝은 배경음악 대신 파도 소리가 흐르도록 구현해 진행에 따라 분위기가 점차 어두워지게 했습니다.' },
-        { p: '화면 크기에 따라 배경 이미지와 캐릭터의 위치가 틀어졌습니다.',
-          s: '게임의 모든 좌표를 1920×1080 하나의 기준으로 고정하고, 실제 화면 크기에 맞춰 비율을 유지한 채 게임 화면 전체를 확대·축소하도록 구현했습니다.' },
-        { p: '대화 내용을 바꾸거나 챕터를 추가할 때마다 코드를 고쳐야 하는 구조는 수정과 확장이 어려웠습니다.',
-          s: '챕터와 NPC, 대화 순서를 하나의 데이터 목록으로 정리해, 코드를 고치지 않고 데이터만 수정하면 되도록 설계했습니다.' }
+        { title: '해양오염 이야기인데, 게임이 너무 밝고 귀여웠습니다',
+          story: [
+            '고양이 주민들과 알록달록한 항구를 그리다 보니, 게임 전체가 밝고 귀여운 분위기가 되었습니다. 그런데 이 게임이 전하려는 건 사소한 선택이 쌓여 바다를 망가뜨린다는 무거운 메시지였습니다. 화면과 주제가 서로 어긋나 있었습니다.',
+            '그래서 밝게 시작하되, 이야기가 진행될수록 점점 어두워지도록 바꾸기로 했습니다. 같은 항구를 세 단계로 다시 그려, 후반부에 들어서면 배경이 어두운 장면으로 바뀌게 했습니다.',
+            { cols: 2, items: [
+              { src: 'images/nyang/bg-0.jpg', tag: '초반', cap: '맑은 바다와 조용한 항구' },
+              { src: 'images/nyang/bg-4.jpg', tag: '후반', cap: '오염된 바다와 어두워진 마을' }] },
+            '소리도 함께 바꿨습니다. 밝은 배경음악이 흐르던 자리에 후반부부터는 파도 소리만 남도록 구현해, 화면과 소리가 함께 무거워지도록 했습니다.'
+          ] },
+        { title: '화면 크기가 바뀌면 배경과 캐릭터가 따로 놀았습니다',
+          story: [
+            '작업하던 화면에서는 잘 맞던 장면이, 크기가 다른 화면에서 열면 배경 이미지와 캐릭터의 위치가 서로 틀어졌습니다.',
+            '요소마다 화면 크기에 맞춰 위치를 따로 계산하고 있었기 때문입니다. 그래서 게임의 모든 좌표를 1920×1080 하나의 기준으로 고정하고, 실제 화면 크기에 맞춰 비율을 유지한 채 게임 화면 전체를 한 번에 확대·축소하도록 바꿨습니다. 이제 어떤 화면에서도 같은 장면이 보입니다.',
+            { cols: 1, items: [
+              { src: 'images/nyang/talk-day1.webp', tag: '수정 후', cap: '1920×1080 기준으로 고정한 대화 장면' }] }
+          ] },
+        { title: '대화를 하나 고칠 때마다 코드를 고쳐야 했습니다',
+          story: [
+            '게임은 1일차부터 6일차까지, 38개의 대화 장면으로 이어집니다. 처음에는 대화 내용이 코드 곳곳에 들어가 있어서, 대사 한 줄을 바꾸거나 챕터를 하나 추가할 때마다 코드를 찾아 고쳐야 했습니다. 이야기를 다듬을수록 수정이 점점 어려워졌습니다.',
+            '그래서 챕터와 NPC, 대화 순서를 하나의 데이터 목록으로 따로 정리했습니다. 이제는 코드를 건드리지 않고 데이터만 수정하면 대화를 바꾸거나 늘릴 수 있습니다.',
+            { cols: 1, items: [
+              { src: 'images/nyang/ai-dialogues.webp', tag: '대화 장면', cap: '1일차부터 6일차까지 날짜별로 정리한 대화 장면' }] }
+          ] }
       ]
     },
     // Sub projects
@@ -521,14 +561,69 @@
       roles: ['콘텐츠 기획', 'UI 디자인', '웹 개발'],
       tools: ['React', 'JavaScript'],
       link: 'https://festival-zau6.onrender.com', linkLabel: '웹사이트 보기',
+      story: [
+        { en: 'Planning', ko: '기획',
+          lead: '페스티벌에 관심이 생긴 사람들에게, 가기 전에 알아두면 좋은 정보를 한곳에 모아 소개하는 웹사이트입니다.',
+          blocks: [
+            { type: 'steps', items: [
+              { h: '메인 페이지', p: '깃발 일러스트와 웹페이지 소개 문구로 시작합니다.' },
+              { h: '국내 페스티벌', p: '국내에서 열리는 페스티벌의 장소, 가격, 시간을 소개합니다.' },
+              { h: '해외 페스티벌', p: '해외에서 열리는 페스티벌의 장소, 가격, 시간을 소개합니다.' },
+              { h: '추천 플레이리스트', p: '페스티벌에 가기 전 한 번 들어보면 좋은 음악을 소개합니다.' },
+              { h: '관람 가이드', p: '스탠딩존 문화와 관람 매너를 소개합니다.' },
+              { h: '준비물 가이드', p: '페스티벌에 가기 전 꼭 챙겨야 할 준비물을 소개합니다.' }] },
+            { type: 'gallery', cols: 3, items: [
+              { src: 'images/rock/sitemap.jpg', tag: '구조도', cap: '메인 페이지 아래 다섯 개의 메뉴와, 메뉴마다 쓸 화면 형식을 정리한 구조도' },
+              { src: 'images/rock/bench-toss.jpg', tag: '벤치마킹', cap: '벤치마킹한 토스 웹사이트' },
+              { src: 'images/rock/bench-airbnb.jpg', tag: '벤치마킹', cap: '벤치마킹한 에어비앤비 웹사이트' }] }
+          ] },
+        { en: 'Wireframe', ko: '와이어프레임',
+          lead: '화면마다 어떤 React 기능으로 움직일지까지 와이어프레임에 함께 적어 두고 구현을 시작했습니다.',
+          blocks: [
+            { type: 'gallery', cols: 3, items: [
+              { src: 'images/rock/wf-main.jpg', tag: '메인', cap: '중앙 상단 메뉴 5개, 누르면 해당 페이지로 이동' },
+              { src: 'images/rock/wf-domestic.jpg', tag: '국내 · 해외', cap: '페스티벌 정보를 담은 카드 나열 — 카드를 배열로 저장하고 map() 함수로 반복' },
+              { src: 'images/rock/wf-playlist.jpg', tag: '플레이리스트', cap: 'useState 인덱스로 화살표를 누를 때마다 가운데 올 카드를 정하는 슬라이드' },
+              { src: 'images/rock/wf-guide.jpg', tag: '관람 가이드', cap: 'Intersection Observer로 카드가 화면에 들어오면 아래에서 위로 등장' },
+              { src: 'images/rock/wf-prep.jpg', tag: '준비물', cap: '데이터를 배열로 정리하고 map()으로 반복하는 카드 스크롤' }] }
+          ] },
+        { en: 'Result', ko: '결과 화면',
+          lead: '파란 조명과 검은 배경으로 공연장의 분위기를 살려, 다섯 개의 화면을 React 컴포넌트로 나눠 구현했습니다.',
+          blocks: [
+            { type: 'gallery', cols: 2, items: [
+              { src: 'images/rock/home.jpg', tag: '메인', cap: '거대한 ROCK 타이포 위로 펄럭이는 깃발' },
+              { src: 'images/rock/kit-1.jpg', tag: 'Festival Kit', cap: '페스티벌에 꼭 챙겨야 할 준비물 카드' },
+              { src: 'images/rock/playlist-2.jpg', tag: 'Fest Playlist', cap: '화살표를 누르면 가운데 LP가 바뀌는 추천 플레이리스트' },
+              { src: 'images/rock/domestic-2.jpg', tag: 'Local Lineup', cap: '국내 페스티벌 포스터 카드 목록' },
+              { src: 'images/rock/domestic-popup.jpg', tag: 'Local Lineup', cap: '카드를 누르면 열리는 페스티벌 상세 팝업 — 일정, 장소, 가격' },
+              { src: 'images/rock/global-2.jpg', tag: 'Global Lineup', cap: '해외 페스티벌 포스터 카드 목록' },
+              { src: 'images/rock/guide-1.jpg', tag: 'Fest Vibe', cap: '페스티벌을 즐기는 법을 소개하는 관람 가이드' },
+              { src: 'images/rock/guide-2.jpg', tag: 'Fest Vibe', cap: '스크롤하면 아래에서 위로 등장하는 스탠딩존 · 피크닉존 안내' }] }
+          ] }
+      ],
       tsLead: '다섯 개의 화면을 컴포넌트로 나누고, 상호작용이 어긋나는 지점을 하나씩 바로잡았습니다.',
       ts: [
-        { p: '페스티벌 상세 팝업 안쪽을 클릭해도, 바깥 배경을 누른 것처럼 팝업이 닫혔습니다.',
-          s: '팝업 본문에서 클릭 이벤트가 배경으로 전달되지 않도록 stopPropagation()으로 막아, 바깥 배경을 누를 때만 닫히게 했습니다.' },
-        { p: '플레이리스트 슬라이드가 첫 곡과 마지막 곡에서 범위를 벗어나고, 양옆 앨범이 비면서 가운데 정렬이 틀어졌습니다.',
-          s: '현재 위치를 Math.max/Math.min으로 처음과 끝 사이에 묶고 끝에서는 버튼을 비활성화했으며, 빈 자리에는 같은 크기의 빈 칸을 두어 가운데 앨범의 위치를 고정했습니다.' },
-        { p: '스크롤하기 전부터 아래쪽 카드와 가이드 섹션의 등장 애니메이션이 미리 재생되었습니다.',
-          s: 'IntersectionObserver로 요소가 화면에 들어오는 순간을 감지해 그때 애니메이션이 시작되게 하고, 컴포넌트가 사라질 때 관찰을 해제했습니다.' }
+        { title: '팝업 안을 눌러도 팝업이 닫혀 버렸습니다',
+          story: [
+            'Local Lineup과 Global Lineup에서 페스티벌 카드를 누르면, 일정과 장소, 가격이 담긴 상세 팝업이 열립니다. 팝업 바깥의 어두운 배경을 누르면 닫히도록 만들었는데, 팝업 안쪽의 정보를 눌러도 배경을 누른 것처럼 팝업이 닫혔습니다.',
+            '원인은 클릭 이벤트가 전달되는 방식에 있었습니다. 팝업 본문을 누른 클릭이 그 바깥을 감싼 배경까지 그대로 올라가, 배경의 닫기 동작이 함께 실행되고 있었습니다. 그래서 팝업 본문에서 stopPropagation()으로 클릭이 배경으로 전달되지 않게 막았습니다. 이제 바깥 배경을 누를 때만 팝업이 닫힙니다.',
+            { cols: 1, items: [
+              { src: 'images/rock/domestic-popup.jpg', tag: '수정 후', cap: '안쪽을 눌러도 닫히지 않는 페스티벌 상세 팝업' }] }
+          ] },
+        { title: '첫 곡과 마지막 곡에서 플레이리스트가 무너졌습니다',
+          story: [
+            '추천 플레이리스트는 화살표를 누를 때마다 가운데 LP가 바뀌는 슬라이드입니다. 그런데 첫 곡에서 왼쪽, 마지막 곡에서 오른쪽 화살표를 누르면 슬라이드가 곡 목록의 범위를 벗어났습니다. 또 양 끝에서는 옆에 올 앨범이 없어 자리가 비면서, 가운데 앨범의 정렬까지 틀어졌습니다.',
+            '먼저 현재 위치를 Math.max와 Math.min으로 처음과 끝 사이에 묶어, 범위 밖으로 나가지 못하게 했습니다. 끝에 도착하면 그 방향의 화살표 버튼은 비활성화했습니다. 그리고 앨범이 비는 자리에는 같은 크기의 빈 칸을 두어, 어느 곡에서든 가운데 앨범이 같은 위치에 오도록 고정했습니다.',
+            { cols: 1, items: [
+              { src: 'images/rock/playlist-2.jpg', tag: '수정 후', cap: '양 끝에서도 가운데 LP 위치가 유지되는 플레이리스트' }] }
+          ] },
+        { title: '스크롤하기도 전에 등장 애니메이션이 끝나 있었습니다',
+          story: [
+            '준비물 카드와 관람 가이드 섹션은 스크롤하면 아래에서 위로 떠오르도록 만들었습니다. 하지만 막상 스크롤해서 내려가 보면 애니메이션은 이미 끝나 있었습니다. 페이지가 열리는 순간 화면 아래에 있는 요소들까지 한꺼번에 재생되고 있었기 때문입니다.',
+            'IntersectionObserver로 요소가 실제로 화면에 들어오는 순간을 감지해, 그때 애니메이션이 시작되도록 바꿨습니다. 그리고 다른 페이지로 이동해 컴포넌트가 사라질 때는 관찰을 해제해, 보이지 않는 요소를 계속 지켜보지 않도록 정리했습니다.',
+            { cols: 1, items: [
+              { src: 'images/rock/guide-2.jpg', tag: '수정 후', cap: '화면에 들어올 때 아래에서 위로 등장하는 관람 가이드 섹션' }] }
+          ] }
       ]
     },
     'shuim': {
@@ -649,6 +744,12 @@
     const ts = I.ts || [];
     $('pvTs').replaceChildren(...(ts.length ? ts.map((t, i) => {
       const n = String(i + 1).padStart(2, '0'), li = document.createElement('li');
+      if (t.story) {   // told as a story: paragraphs with the process images between them
+        li.className = 'ts-story';
+        const head = make('div', 'ts-head'); head.append(make('span', 'ts-k', `TROUBLE ${n}`), make('h4', 'ts-title', t.title));
+        li.append(head, ...t.story.map(s => typeof s === 'string' ? make('p', 'ts-t', s) : STORY_BLOCKS.gallery(s)));
+        return li;
+      }
       const card = (cls, k, text) => { const c = make('div', `ts-card ${cls}`); c.append(make('span', 'ts-k', `${k} ${n}`), make('p', 'ts-t', text)); return c; };
       li.append(card('ts-p', 'PROBLEM', t.p), card('ts-s', 'SOLUTION', t.s));
       return li;
@@ -687,12 +788,14 @@
   }
   // any story image opens large
   const lightbox = $('lightbox');
-  $('pvStory').addEventListener('click', e => {
+  const enlarge = e => {
     const img = e.target.closest('.st-gallery img'); if (!img) return;
     lightbox.querySelector('img').src = img.src;
     lightbox.querySelector('figcaption').textContent = img.alt;
     lightbox.hidden = false;
-  });
+  };
+  $('pvStory').addEventListener('click', enlarge);
+  $('pvTs').addEventListener('click', enlarge);
   lightbox.addEventListener('click', () => { lightbox.hidden = true; });
   /* A model you can turn with the mouse: three.js is fetched the first time a page with a model opens. */
   let model3d = null;
@@ -1011,14 +1114,14 @@
   addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { measure(); if (started) { plan(); if (onpage) { cur = { ...B }; apply(cur); } } }, 120); });
 
   /* ---------- First visit: blank screen, then the spider walks up in bursts ---------- */
-  const DELAY = 0.4;
+  const DELAY = 0.2;
   const ENTRY_AMP = 1.5;   // legs move a bit wider on the way in than while scrolling
   const PLAN = [
-    { t0: 0.00, t1: 1.35, f0: 0.00, f1: 0.46 },
-    { t0: 1.70, t1: 2.80, f0: 0.46, f1: 0.82 },
-    { t0: 3.10, t1: 3.95, f0: 0.82, f1: 1.00 }
+    { t0: 0.00, t1: 0.85, f0: 0.00, f1: 0.46 },
+    { t0: 1.05, t1: 1.75, f0: 0.46, f1: 0.82 },
+    { t0: 1.95, t1: 2.50, f0: 0.82, f1: 1.00 }
   ];
-  const END = 3.95;
+  const END = 2.50;
   function travel(t) {
     let f = 0;
     for (const b of PLAN) {
@@ -1041,7 +1144,7 @@
     if (reduce) return;
     intro.classList.add('auto');   // no "SCROLL" hint while it plays
     const from = scrollY, to = pages[1].getBoundingClientRect().top + scrollY;   // profile at the top of the screen
-    const t0 = performance.now() + 500, ms = 3000;
+    const t0 = performance.now() + 300, ms = 2000;
     const evs = ['wheel', 'touchstart', 'keydown', 'mousedown'];
     let done = false;
     const finish = () => { if (done) return; done = true; evs.forEach(e => removeEventListener(e, finish)); intro.classList.remove('auto'); };

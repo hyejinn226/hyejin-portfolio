@@ -27,12 +27,12 @@ html.locked, html.locked body { overflow: hidden; }
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
-.page + .page { margin-top: 64vh; }   /* breathing room between pages */
-.page:last-child { margin-bottom: 20vh; }
+.page + .page { margin-top: 24vh; }   /* breathing room between pages */
+.page:last-child { margin-bottom: 6vh; }
 .intro + .page { margin-top: -40vh; }  /* the profile slides up under the last of the tow-away instead of after an empty screen */
 
 /* ---------- Intro ---------- */
-.intro { height: 260vh; padding: 0; }   /* the tow-away is spread over this much scrolling */
+.intro { height: 200vh; padding: 0; }   /* the tow-away is spread over this much scrolling */
 .stage { position: sticky; top: 0; height: 100vh; overflow: clip; display: grid; place-items: center; box-sizing: border-box; padding: 24px max(16px, env(safe-area-inset-right, 0px)) 24px max(16px, env(safe-area-inset-left, 0px)); }
 .scroll-hint { position: absolute; left: 50%; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); margin: 0; font: 300 12px var(--font); letter-spacing: 0.12em; color: var(--muted); opacity: 0; transition: opacity 0.8s ease; }
 .ready .scroll-hint { opacity: 1; }
@@ -148,7 +148,10 @@ html.locked, html.locked body { overflow: hidden; }
 .edu h3 { margin: 0; font: inherit; }
 .edu ul { list-style: none; margin: 0; padding: 0; }
 .edu time { font-variant-numeric: tabular-nums; }
-.history { display: grid; gap: 28px; }
+.history { display: grid; grid-template-columns: auto auto; justify-content: start; gap: 28px 64px; }
+.history > :first-child { grid-column: 1 / -1; }   /* education on its own row, activities and certificates side by side */
+.history > .edu:not(:first-child) { font-size: clamp(12px, 0.85vw, 14px); }
+@media (max-width: 640px) { .history { grid-template-columns: minmax(0, 1fr); } }
 /* next: a spider hanging on a thread; its legs are animated from main.js */
 .next-drop {
   justify-self: center; display: flex; flex-direction: column; align-items: center; gap: 4px;
@@ -279,6 +282,15 @@ html.viewing { overflow: hidden; }   /* html only: hiding body too clamps the pa
 .ts-k { font-weight: 600; font-size: 12px; letter-spacing: 0.14em; opacity: 0.75; }
 .ts-t { margin: 0; font-weight: 400; font-size: clamp(15px, 1.15vw, 17px); line-height: 1.65; }
 .ts .ts-empty { display: block; margin: 0; font-weight: 300; font-size: 15px; color: var(--muted); }
+/* troubleshooting told as a story: a numbered heading, then paragraphs and process images in order */
+.ts .ts-story { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; max-width: 860px; padding-top: 28px; border-top: 1px solid color-mix(in srgb, var(--ink) 25%, transparent); }
+.ts:has(.ts-story) { gap: 56px; }
+.ts-head { display: grid; gap: 6px; }
+.ts-head .ts-k { color: var(--ink); }
+.ts-title { margin: 0; font-weight: 600; font-size: clamp(17px, 1.4vw, 21px); line-height: 1.5; color: var(--ink); }
+.ts-story .ts-t { color: var(--fg); line-height: 1.85; }
+.ts-story .st-gallery { margin: 8px 0; }
+.ts-story .st-gallery:has(> figure:only-child) { max-width: 480px; }   /* a lone image stays small so the story keeps moving */
 .pv-model {
   aspect-ratio: 16 / 9; display: grid; place-items: center; overflow: hidden; cursor: grab; border-radius: 20px;
   background: color-mix(in srgb, var(--ink) 7%, var(--bg)); font-weight: 300; font-size: 14px; color: var(--muted);
