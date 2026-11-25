@@ -142,7 +142,8 @@ html.locked, html.locked body { overflow: hidden; }
 /* the address copies on click, same as Mail on the contact page */
 .copy-mail { padding: 0; border: 0; background: none; cursor: pointer; font: inherit; color: inherit; text-decoration: underline 1px; text-underline-offset: 0.2em; }
 .copy-mail:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 4px; }
-.docs { margin: 28px 0 0; }
+.docs { margin: 28px 0 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.docs .process-link { background: none; color: var(--ink-text); box-shadow: inset 0 0 0 1.5px var(--ink); }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .edu { margin: 0; font-weight: 300; font-size: clamp(15px, 1.2vw, 19px); line-height: 1.9; color: var(--ink-text); }
 .edu h3 { margin: 0; font: inherit; }
@@ -263,6 +264,8 @@ html.viewing { overflow: hidden; }   /* html only: hiding body too clamps the pa
 .pv-no { font-weight: 500; font-size: 12px; letter-spacing: 0.16em; color: var(--muted); }
 .pv-body h2 { font-weight: 800; font-size: clamp(34px, 5vw, 72px); letter-spacing: -0.03em; color: var(--ink); }
 .pv-desc { font-weight: 400; font-size: clamp(16px, 1.4vw, 21px); color: var(--ink); }
+.pv-intro { max-width: 680px; font-weight: 400; font-size: 15px; line-height: 1.75; color: var(--fg); }
+.pv-intro:empty { display: none; }
 /* team / role / tools / year, one column each */
 .pv-facts {
   margin: 0; padding: 28px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px;
@@ -334,6 +337,10 @@ html.viewing { overflow: hidden; }   /* html only: hiding body too clamps the pa
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--fg) 10%, transparent);   /* keeps white screenshots off the white page */
 }
 .st-gallery img:hover { transform: translateY(-2px); }
+.st-yt { margin: 0; display: grid; gap: 10px; max-width: 860px; }
+.st-yt iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 12px; background: #000; }
+.st-yt figcaption { font-weight: 400; font-size: 13px; line-height: 1.6; color: var(--fg); }
+.st-yt a { color: var(--ink-text); }
 .st-gallery figcaption { font-weight: 400; font-size: 13px; line-height: 1.6; color: var(--fg); }
 .st-gallery figcaption b { font-weight: 600; color: var(--ink); }
 @media (max-width: 760px) {

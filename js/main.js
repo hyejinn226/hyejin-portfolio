@@ -279,8 +279,136 @@
      Edit the project text here; the labels, list rows and project pages are all filled from it.
      link: the project's address (the button appears once it is set). ts: troubleshooting, p = problem, s = solution. */
   const INFO = {
+    'feeld': {
+      no: '01', name: 'FEELD', type: 'Interactive Media Art', year: '2026',
+      desc: '직접 촬영하고 녹음한 숲을 화면 안에 옮겨, 손으로 자연을 경험하는 인터랙티브 미디어아트', team: '졸업작품 · 7인 팀',
+      intro: '관객이 자연물에 손을 가까이 가져가면 접촉한 곳부터 숲의 색이 번져나와 자연의 감각을 경험할 수 있습니다.',
+      tags: ['개발 환경 구축', '센서 · 인터랙션 테스트', '360 촬영 · 3D 변환', '웹 · 메이킹필름'],
+      roles: ['초기 개발환경 구축', '립모션 센서 테스트', 'Unity 인터랙션 테스트', 'Insta360 촬영', '촬영본 PLY 변환', '프로젝트 소개 웹 개발', '메이킹필름 촬영 · 편집'],
+      tools: ['Unity', 'Ultraleap (Leap Motion)', 'Insta360', 'HTML', 'CSS', 'JavaScript'],
+      link: 'https://feeld.pages.dev', linkLabel: '프로젝트 웹사이트',
+      story: [
+        { en: 'Concept', ko: '기획',
+          lead: '직접 숲을 촬영하고 소리를 녹음해 디지털 화면 안에 담았습니다. 관람객은 손을 뻗어 화면 속 자연을 만지며, 디지털로도 자연을 체험할 수 있습니다.',
+          blocks: [
+            { type: 'gallery', cols: 2, items: [
+              { src: 'images/feeld/sec-hand.jpg', tag: '체험', cap: '체험 오브젝트에 손을 올려 화면 속 숲과 상호작용하는 장면' },
+              { src: 'images/feeld/sec-space.jpg', tag: '전시 공간', cap: '체험대와 미디어월, 관람 동선을 담은 전시 공간 구성' }] },
+            { type: 'text', title: '체험 방식 변경 — 3인에서 1인으로', paras: [
+              '처음 FEELD는 흙, 풀, 돌 체험대 3개에 립모션을 하나씩 설치한 3인 체험이었습니다. 한 사람이 만지면 그 자연물의 구역이 반응하고, 두 사람이 함께 만지면 색이 돌아오며 형태가 이어지고, 세 사람이 모두 만지면 숲 전체가 드러나도록 기획했습니다.',
+              '하지만 여러 손의 효과가 한 화면에서 겹치면, 관객이 자기 동작 때문에 무엇이 바뀌었는지 구별하기 어려웠습니다. 팀은 비교 테스트를 거쳐 체험대 1개와 립모션 1대로 한 사람이 조작하는 체험으로 바꿨고, 동행은 미디어월을 함께 감상하며 번갈아 체험하도록 운영 방식을 정했습니다.'] },
+            { type: 'gallery', cols: 3, items: [
+              { src: 'images/feeld/system-3station.jpg', tag: '변경 전', cap: '3인 체험 시스템 구성도 — 체험대 3개와 립모션 3대' },
+              { src: 'images/feeld/flow-3station.jpg', tag: '변경 전', cap: '손의 수에 따라 2개는 Relation, 3개는 Landscape로 바뀌는 흐름' },
+              { src: 'images/feeld/system-1station.jpg', tag: '변경 후', cap: '1인 체험 시스템 구성도 — 체험대 1개와 립모션 1대' }] }
+          ] },
+        { en: 'Interaction', ko: '센서 · 인터랙션 테스트',
+          lead: '초기 개발 환경을 구축하고, 립모션 센서로 손을 인식해 Unity 화면 속 숲이 반응하는지 테스트했습니다.',
+          blocks: [
+            { type: 'gallery', cols: 3, items: [
+              { src: 'images/feeld/film-dev2.jpg', tag: '센서 테스트', cap: '립모션 위에 손을 올리고 Unity 화면의 반응을 확인하는 모습' },
+              { src: 'images/feeld/film-dev1.jpg', tag: 'Unity', cap: '손의 움직임에 따라 변하는 입자를 큰 화면에서 점검하는 모습' },
+              { src: 'images/feeld/film-touch.jpg', tag: '체험대 테스트', cap: '이끼 체험대에 손을 얹어 반응을 확인하는 장면' }] }
+          ] },
+        { en: 'Capture', ko: '촬영 · 3D 변환',
+          lead: '숲길을 답사하고, Insta360으로 숲길을 걸으며 360 영상을 촬영했습니다. 촬영본은 사람을 지우는 과정을 거쳐 Postshot에서 가우시안 스플랫으로 학습시키고, 화면 속에서 입자로 다룰 수 있는 PLY 파일로 바꿨습니다.',
+          blocks: [
+            { type: 'gallery', cols: 3, items: [
+              { src: 'images/feeld/film-walk.jpg', tag: '답사', cap: '촬영 전 팀원들과 숲길을 걸으며 촬영 지점을 확인했습니다' },
+              { src: 'images/feeld/film-stairs.jpg', tag: '촬영지', cap: '360 영상으로 기록한 숲길의 계단 구간' },
+              { src: 'images/feeld/tech-devices.webp', tag: '장비', cap: 'Insta360 카메라와 현장 녹음 장비' }] },
+            { type: 'steps', items: [
+              { h: '방향별 사진으로 나누기', p: '360 영상을 0.33초 간격으로, 여러 방향의 일반 사진으로 나눴습니다. 영상 하나에서 사진 476장이 나왔습니다.' },
+              { h: '사람 지우기', p: '사진마다 사람을 찾아 지울 영역(마스크)을 만들어, 촬영자와 팀원이 숲 데이터에 남지 않게 했습니다.' },
+              { h: '가우시안 스플랫 학습', p: 'Postshot에서 사진과 마스크로 숲을 3D로 재구성했습니다.' },
+              { h: 'PLY로 내보내기', p: 'Unity와 웹에서 입자로 다룰 수 있도록 PLY 파일로 내보냈습니다.' }] },
+            { type: 'gallery', cols: 3, items: [
+              { src: 'images/feeld/film-raw360.jpg', tag: '360 원본', cap: '360 카메라로 촬영한 원본 영상의 한 장면' },
+              { src: 'images/feeld/ply-frame.jpg', tag: '방향별 사진', cap: '360 원본에서 한 방향만 잘라낸 사진' },
+              { src: 'images/feeld/hero-forest.webp', tag: '결과', cap: '재구성한 숲을 점 데이터로 화면에 띄운 모습' }] }
+          ] },
+        { en: 'Web', ko: '프로젝트 소개 웹',
+          lead: '전시를 소개하는 프로젝트 웹사이트를 개발했습니다. 촬영한 숲 이미지 위로 FEELD의 이야기와 체험 방법, 팀을 소개합니다.',
+          blocks: [
+            { type: 'gallery', cols: 3, items: [
+              { src: 'images/feeld/web-about.jpg', tag: 'About', cap: '프로젝트의 출발점을 소개하는 화면' },
+              { src: 'images/feeld/web-experience.jpg', tag: 'Experience', cap: '체험 방법을 소개하는 화면' },
+              { src: 'images/feeld/web-postcard.jpg', tag: 'Postcard', cap: '숲에서 보내는 엽서를 만들어 보는 화면' }] }
+          ] },
+        { en: 'Making Film', ko: '메이킹필름',
+          lead: '숲 답사와 촬영, 개발과 테스트, 팀원 인터뷰를 엮어 FEELD가 만들어진 과정을 담은 메이킹필름을 촬영하고 편집했습니다. 전시장에서는 계단석에 앉아 이 영상을 관람합니다.',
+          blocks: [
+            { type: 'youtube', id: 'LRIbyQtKYCc', cap: 'FEELD MAKINGFILM (9분 34초)',
+              link: { href: 'https://www.youtube.com/@kaywon_dmd_itda', label: '잇다: IT-DA 유튜브 채널' } },
+            { type: 'gallery', cols: 3, items: [
+              { src: 'images/feeld/film-fern.jpg', tag: '숲 기록', cap: '메이킹필름에 담은 숲 바닥의 고사리' },
+              { src: 'images/feeld/film-ground.jpg', tag: '숲 기록', cap: '체험대 재료가 된 숲 바닥의 돌과 풀' },
+              { src: 'images/feeld/film-back.jpg', tag: '숲 기록', cap: '숲길을 걷는 팀원의 뒷모습' }] }
+          ] }
+      ],
+      tsLead: '초기 센서 · 인터랙션 테스트와 프로젝트 소개 웹을 만들며 생긴 문제를, 원인을 찾아 하나씩 해결했습니다.',
+      ts: [
+        { title: '손의 어떤 값을 써야 할지 알 수 없었습니다',
+          story: [
+            '립모션은 손바닥 위치와 속도, 회전, 손가락마다 펴졌는지 여부까지 수십 가지 값을 보내 줍니다. 처음에는 제스처마다 다른 반응을 만들려고 했지만, 회전이나 손바닥 속도, 손가락 구분은 손을 움직여도 거의 바뀌지 않았고, 높이와 앞뒤 값은 아주 조금씩만 변했습니다.',
+            '감으로 고르지 않기 위해, 모든 값을 화면에 실시간으로 띄우는 제스처 디버그 씬을 만들었습니다. 그리고 손을 가만히 둔 상태에서 값마다 얼마나 떨리는지(표준편차)를 측정해 순위를 매겼습니다.',
+            '손을 쥔 정도(Grab)와 집은 정도(Pinch), 손가락이 펴졌는지 여부는 거의 떨리지 않았지만, 손가락 끝 위치처럼 정밀한 값은 가만히 있어도 흔들렸습니다. 그래서 정밀한 제스처 대신 안정된 값과 큰 동작 위주로 인터랙션을 설계했습니다.'
+          ] },
+        { title: '작업 중 갑자기 손을 전혀 인식하지 못했습니다',
+          story: [
+            '방금까지 잘 되던 센서가 작업 도중 갑자기 손을 인식하지 못했습니다. 조명이나 환경은 그대로였는데, 제어판의 카메라 화면은 완전히 검게 나왔고 USB 허브나 전력이 부족한 포트라는 경고가 떠 있었습니다.',
+            '케이블을 다시 꽂고 제어판과 트래킹 서비스를 다시 시작해도 돌아오지 않았고, 결국 노트북을 재부팅해서야 해결됐습니다. 이 경험으로 센서는 전원이 안정된 포트에 직접 연결하고 허브를 쓰지 않아야 하며, 전시에서는 이런 상황을 위한 복구 절차가 필요하다는 것을 정리했습니다.'
+          ] },
+        { title: '손과 반대로 움직이고, 가끔은 화면이 통째로 사라졌습니다',
+          story: [
+            '숲(폭포) 데이터가 뒤집힌 채 들어와 Z축으로 180도 돌려 바로 세웠는데, 그 뒤로 손을 오른쪽으로 움직이면 입자는 왼쪽으로 움직였습니다. 손의 방향을 계산할 때 데이터를 돌린 회전이 반영되지 않았기 때문입니다. 손 방향에도 같은 회전을 적용했고, 센서 설치 방향이 바뀌어도 대응할 수 있도록 축을 뒤집는 설정을 만들었습니다.',
+            '또 반응을 크게 보이게 하려고 손 위치를 20배로 키워 썼는데, 인식이 순간적으로 튀면 그 값도 20배가 되어 입자가 화면 밖으로 밀려나 버렸습니다. 손 위치와 입자가 밀려나는 거리에 상한을 두어, 값이 튀어도 화면이 사라지지 않게 했습니다.'
+          ] },
+        { title: '손을 올려도 화면이 움찔거리기만 했습니다',
+          story: [
+            '손을 따라 입자가 크게 움직여야 하는데, 화면은 움찔거리기만 하고 큰 반응이 없었습니다.',
+            '콘솔 기록을 보니 손 인식이 1초에도 여러 번 끊겼다 다시 잡히고 있었습니다. 반응이 커지려는 순간마다 "손을 놓침"으로 처리되어 0으로 돌아갔던 것입니다. 손이 잠깐 잡히지 않아도 0.35초 안에 다시 잡히면 계속 인식 중으로 보도록 바꾸자, 손을 따라 반응이 끊기지 않고 이어졌습니다. 이후 이 방식을 다른 장면에도 적용했습니다.'
+          ] },
+        { title: '360 영상에는 촬영자가 항상 함께 찍혀 있었습니다',
+          story: [
+            '360 카메라는 사방을 한 번에 찍기 때문에, 카메라를 든 촬영자와 함께 걷던 팀원도 화면에 그대로 남습니다. 이대로 3D로 재구성하면 숲 사이에 사람의 흔적이 흐릿한 덩어리로 섞여 들어갑니다.',
+            { cols: 2, items: [
+              { src: 'images/feeld/film-raw360.jpg', tag: '문제', cap: '360 원본의 한 장면 — 사람이 찍힌 양쪽 끝은 잘라 내고 보여 드립니다' },
+              { src: 'images/feeld/ply-mask.png', tag: '마스크', cap: '사진 속 사람을 찾아 만든 마스크 — 흰 부분은 3D 재구성에서 제외됩니다' }] },
+            '그래서 360 영상을 여러 방향의 사진으로 나누고, 사진마다 사람을 자동으로 찾아 지울 영역을 만드는 과정을 거쳤습니다. 처음 버전에서는 사람을 놓치는 장면이 있었고, 하늘 방향 사진은 재구성에 도움이 되지 않았습니다.',
+            '두 번째 버전에서 방법을 고쳤습니다. 촬영자는 늘 카메라 바로 아래에 있으므로, 사람 인식이 놓치더라도 그 방향은 모든 사진에서 항상 지우도록 했습니다. 사람 인식 기준은 낮추고 지우는 여백은 넓혔습니다. 하늘 방향은 빼고 아래로 기울인 방향만 뽑았고, 0.33초 간격으로 촘촘히 뽑아 카메라 위치 계산이 잘 되도록 했습니다.'
+          ] },
+        { title: '225MB의 숲을 웹에서 바로 띄워야 했습니다',
+          story: [
+            '웹사이트에도 FEELD의 핵심인 "손으로 숲을 깨우는" 경험을 넣고 싶었습니다. 마우스를 누르고 있으면 흰 입자가 모여 숲이 드러나고, 점점 촬영한 숲의 색으로 바뀌는 장면입니다. 그런데 촬영본을 변환한 PLY 파일은 점이 100만 개, 용량이 225MB여서 웹에 그대로 올릴 수 없었습니다.',
+            '처음에는 점을 14만 개로 줄여 1.68MB까지 가볍게 만들었습니다. 하지만 마지막 단계에서 숲이 촬영본처럼 보이지 않고, 흐릿한 점무늬로만 남았습니다.',
+            '그래서 점을 단순한 점이 아니라, 방향과 모양을 가진 가우시안 스플랫 그대로 그리는 방식으로 바꿨습니다. 스플랫 30만 개를 5.4MB에 담아, 웹에서도 촬영한 숲의 모습이 살아나게 했습니다.',
+            { cols: 3, items: [
+              { src: 'images/feeld/web-splat-start.jpg', tag: '누르는 동안', cap: '마우스를 누르고 있으면 흰 입자가 모이기 시작합니다' },
+              { src: 'images/feeld/web-splat.jpg', tag: '숲이 드러남', cap: '입자가 모여 촬영한 숲길의 형태가 드러나는 단계' },
+              { src: 'images/feeld/web-splat-color.webp', tag: '색이 돌아옴', cap: '촬영한 숲의 색이 돌아온 마지막 단계' }] },
+            '이후 숲 장면을 계단이 보이는 다른 촬영본으로 바꾸자, 카메라 바로 앞의 나무가 화면을 가리고 바닥이 비어 보였습니다. 카메라가 지나가는 길목의 점은 지우고 바닥의 점은 남겨, 깔끔한 구도를 만들었습니다.'
+          ] },
+        { title: '팀원의 맥북에서는 전시공간이 보이지 않았습니다',
+          story: [
+            '윈도우의 크롬에서는 잘 보이던 전시공간 입자가, 팀원의 맥북에서는 보이지 않았습니다.',
+            '원인은 입자를 그리는 방식이었습니다. 빛을 겹쳐 더하는 느낌을 내려고 투명도를 0으로 두고 그렸는데, 크롬은 색을 그대로 더해 보여 주지만 사파리는 투명한 것으로 보고 지워 버렸습니다. 입자의 밝기만큼 투명도를 함께 내보내도록 고쳐, 사파리에서도 보이게 했습니다.',
+            { cols: 1, items: [
+              { src: 'images/feeld/web-space.jpg', tag: '수정 후', cap: '입자로 만든 FEELD 전시공간 — 스크롤하면 관람 동선을 따라 이동합니다' }] },
+            '전시장 아이맥에서도 비슷한 일이 있었습니다. 엽서 글씨가 아주 작게, 기본 폰트로 나왔습니다. 글자 크기에 쓴 단위(cqw)를 예전 사파리가 알아듣지 못해, 크기와 폰트를 적은 줄 전체를 무시했기 때문입니다. 예전 브라우저용 줄을 따로 넣고, 그 단위를 지원하지 않는 상태를 만들어 같은 크기로 나오는지 확인했습니다.'
+          ] },
+        { title: '서버 없이 관람객의 엽서를 지켜야 했습니다',
+          story: [
+            '전시장에서는 관람객이 숲에서 보내는 엽서를 만들어 사이트에 띄우는 코너를 운영했습니다. 사이트가 졸업전시 전체 사이트에도 올라가는 만큼, 접속자가 많아져도 비용이 생기지 않도록 서버 없이 무료로 배포하고, 엽서는 전시장 아이맥의 브라우저에 저장했습니다.',
+            '하지만 이 방식은 엽서가 그 브라우저 안에만 남는다는 약점이 있었습니다. 실제로 전시 중 전날의 엽서가 화면에서 보이지 않아, 엽서가 사라졌을지도 모르는 상황이 생겼습니다.',
+            '주소 뒤에 ?export를 붙이면 저장된 엽서를 파일로 내려받는 백업 기능을 만들어 두었고, 백업 파일 4개를 합쳐 보니 처음 엽서부터 빠짐없이 167장이 남아 있었습니다. 이 엽서들을 사이트 안의 "저장된 엽서" 페이지로 옮겨, 어느 기기에서 열어도 No.001부터 볼 수 있고 한 장씩 이미지로 저장할 수 있게 했습니다.',
+            { cols: 1, items: [
+              { src: 'images/feeld/web-archive.jpg', tag: '저장된 엽서', cap: '관람객이 만든 엽서 167장을 모은 페이지 — 누르면 크게 보고 저장할 수 있습니다' }] }
+          ] }
+      ]
+    },
     'jaltayo-vr': {
-      no: '01', name: '잘타요VR', desc: '어린이를 위한 대중교통 이용 교육 VR 게임', team: '3인 팀 프로젝트',
+      no: '02', name: '잘타요VR', desc: '어린이를 위한 대중교통 이용 교육 VR 게임', team: '3인 팀 프로젝트',
       tags: ['3D 모델링', 'UI/UX 디자인', 'Unity UI 구현', '소개 영상'],
       roles: ['3D 에셋 모델링', 'UI/UX 디자인', 'Unity UI 구현 및 기능 연동', '프로젝트 소개 영상 제작'],
       tools: ['Blender', 'Unity', 'C#', 'After Effects'],
@@ -379,7 +507,7 @@
       ]
     },
     'nyangnyang-harbor': {
-      no: '02', name: '냥냥 항구마을', desc: '해양오염의 심각성을 알리는 웹 기반 시리어스 게임', team: '개인 프로젝트',
+      no: '01', name: '냥냥 항구마을', type: 'Web Game', desc: '해양오염의 심각성을 알리는 웹 기반 시리어스 게임', team: '개인 프로젝트',
       tags: ['기획', '디자인', '개발'],
       roles: ['게임 기획', '아트 · UI 디자인', '웹 개발', '기획부터 구현까지 전 과정 단독 수행'],
       tools: ['HTML', 'CSS', 'JavaScript', 'Illustrator'],
@@ -478,7 +606,7 @@
     },
     // Sub projects
     'phosphate': {
-      no: '01', name: 'Phosphate', type: 'Interactive Web', year: '2026',
+      no: '02', name: 'Phosphate', type: 'Interactive Web', year: '2026',
       desc: '모로코의 인산염을 소개하는 인터랙션 웹페이지', team: '개인 프로젝트',
       tags: ['기획', '디자인', '개발'],
       roles: ['콘텐츠 기획', 'UI · 인터랙션 디자인', '웹 개발', '기획부터 구현까지 전 과정 단독 수행'],
@@ -555,7 +683,7 @@
       ts: [], tsEmpty: '현재 1차 완성 단계입니다. 최종 완성 후 트러블 슈팅을 추가할 예정입니다.'
     },
     'rockrockrock': {
-      no: '02', name: 'ROCKROCKROCK', type: 'Web', year: '2026',
+      no: '03', name: 'ROCKROCKROCK', type: 'Web', year: '2026',
       desc: '락 페스티벌에 가기 전 알아두면 좋은 정보를 모은 웹페이지', team: '개인 프로젝트',
       tags: ['기획', '디자인', '개발'],
       roles: ['콘텐츠 기획', 'UI 디자인', '웹 개발'],
@@ -627,7 +755,7 @@
       ]
     },
     'shuim': {
-      no: '03', name: '쉼', type: 'VR Video', year: '2025',
+      no: '04', name: '쉼', type: 'VR Video', year: '2025',
       desc: '고군산군도를 소개하는 VR 홍보 영상', team: '5인 팀 프로젝트',
       tags: ['영상 편집', '촬영 보조'],
       roles: ['메인 편집', '촬영 보조'],
@@ -773,6 +901,18 @@
         f.append(img, cap); d.append(f);
       });
       return d;
+    },
+    youtube: b => {   // { id, cap, link: { href, label } }
+      const f = make('figure', 'st-yt');
+      const frame = Object.assign(document.createElement('iframe'), {
+        src: `https://www.youtube-nocookie.com/embed/${b.id}`, title: b.cap, loading: 'lazy',
+        allow: 'accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen', allowFullscreen: true
+      });
+      const cap = document.createElement('figcaption');
+      cap.append(b.cap);
+      if (b.link) cap.append(' · ', Object.assign(make('a', '', b.link.label + ' ↗'), { href: b.link.href, target: '_blank', rel: 'noopener' }));
+      f.append(frame, cap);
+      return f;
     }
   };
   function renderStory(story) {
@@ -861,6 +1001,7 @@
     pvBack.textContent = `\u2190 ${returnTo ? 'Skills' : P.sub ? 'Work' : 'Learn by Doing'}`;
     $('pvTitle').textContent = I.name;
     $('pvDesc').textContent = I.desc;
+    $('pvIntro').textContent = I.intro || '';
     renderDetail(I);
     $('pvMediaSec').hidden = !I.model && !I.video;
     $('pvModelFig').hidden = !I.model;
@@ -953,7 +1094,7 @@
     const I = P.info, q = s => P.el.querySelector(s);
     q('.sub-no').textContent = I.no;
     q('.sub-name').textContent = I.name;
-    q('.sub-meta').textContent = `${I.type} · ${I.year}`;
+    q('.sub-meta').textContent = [I.type, I.year].filter(Boolean).join(' · ');
     q('.sub-desc').textContent = I.desc;
     q('.sub-tags').textContent = [I.team, ...I.tags].join(' · ');
     P.label.setAttribute('aria-label', `${I.name} 프로젝트 보기`);

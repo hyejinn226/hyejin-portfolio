@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<title>Process · new Web() Portfolio</title>
+<link rel="stylesheet" href="css/style.css?v=20261127">
+<style>
+  /* The process page reuses the project-page pieces (.pv-h, .st-*) on a plain scrolling page. */
+  .pr-back { position: fixed; z-index: 2; top: calc(16px + env(safe-area-inset-top, 0px)); left: calc(18px + env(safe-area-inset-left, 0px));
+    padding: 8px 4px; font: 500 14px var(--font); color: var(--ink-text); text-decoration: none; background: var(--bg); border-radius: 6px; }
+  .pr-body { max-width: 1040px; margin: 0 auto; box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(64px, 8vw, 104px);
+    padding: 104px max(20px, env(safe-area-inset-right, 0px)) 96px max(20px, env(safe-area-inset-left, 0px)); }
+  .pr-hero { display: grid; justify-items: center; text-align: center; gap: 14px; }
+  .pr-hero > * { margin: 0; }
+  .pr-hero h1 { font-weight: 800; font-size: clamp(34px, 5vw, 72px); letter-spacing: -0.03em; color: var(--ink); }
+  .pr-slogan { max-width: 760px; font-weight: 400; font-size: clamp(17px, 1.5vw, 22px); line-height: 1.6; color: var(--fg); }
+  .pr-slogan b { font-weight: 700; color: var(--ink); }
+  /* one case: what AI did beside what I fixed by hand */
+  .pr-case { display: grid; gap: 18px; padding-top: 28px; border-top: 1px solid color-mix(in srgb, var(--ink) 25%, transparent); }
+  .pr-case h4 { margin: 0; font-weight: 600; font-size: clamp(17px, 1.4vw, 21px); color: var(--ink); }
+  .pr-pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 14px; }
+  .pr-pair > div { padding: 20px 22px; border-radius: 16px; }
+  .pr-ai { border: 1.5px solid color-mix(in srgb, var(--ink) 45%, transparent); }
+  .pr-me { background: color-mix(in srgb, var(--ink) 9%, var(--bg)); }
+  .pr-pair .k { display: block; margin-bottom: 8px; font-weight: 600; font-size: 12px; letter-spacing: 0.14em; color: var(--ink-text); }
+  .pr-pair p { margin: 0; font-size: 15px; line-height: 1.8; color: var(--fg); }
+  .pr-table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.7; }
+  .pr-table th, .pr-table td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid color-mix(in srgb, var(--fg) 12%, transparent); }
+  .pr-table th { font-weight: 600; font-size: 12px; letter-spacing: 0.1em; color: var(--muted); }
+  .pr-table td:first-child { width: 28%; color: var(--muted); }
+  .pr-rules { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 760px; }
+  .pr-rules li { font-size: 16px; line-height: 1.7; color: var(--fg); }
+  .pr-rules b { color: var(--ink); font-weight: 600; }
+  .lightbox { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; gap: 12px; padding: 24px; background: rgba(0, 0, 0, .86); cursor: zoom-out; }
+  .lightbox[hidden] { display: none; }
+  .lightbox img { max-width: 92vw; max-height: 82vh; border-radius: 10px; }
+  .lightbox figcaption { color: #eee; font-size: 14px; }
+  @media (max-width: 640px) { .pr-pair { grid-template-columns: minmax(0, 1fr); } .pr-table td:first-child { width: 34%; } }
+</style>
+</head>
+<body>
+<a class="pr-back" href="index.html#p1">← new Web()</a>
+
+<main class="pr-body">
+  <header class="pr-hero">
+    <p class="pv-no">PROCESS</p>
+    <h1>제작 프로세스</h1>
+    <p class="pr-slogan">한 가닥의 아이디어를 엮어 경험을 완성하는 <b>콘텐츠 크리에이터</b>입니다.<br>
+      기획 · 디자인 · 구현 · 영상을 엮어, 사용자가 직접 들어가 느끼는 인터랙티브 경험을 만듭니다.</p>
+  </header>
+
+  <section class="st-sec">
+    <div class="st-head"><span class="st-no">01</span><h3 class="pv-h">Knowledge<small>지식 역량</small></h3></div>
+    <p class="st-lead">슬로건의 "엮다"처럼, 서로 다른 네 가지 역량을 하나의 경험으로 엮습니다.</p>
+    <div class="st-cards">
+      <div class="st-card"><h4>기획</h4><p>누가, 어떤 상황에서 체험하는지에서 출발해 시나리오와 상호작용을 설계합니다. → FEELD, 잘타요VR</p></div>
+      <div class="st-card"><h4>디자인</h4><p>Illustrator와 Figma로 UI, 그래픽, 페이지 시안을 직접 만들고, 그 시안을 구현의 기준으로 삼습니다. → Phosphate, 냥냥 항구마을</p></div>
+      <div class="st-card"><h4>구현</h4><p>Unity · C#, HTML · CSS · JavaScript로 설계한 경험이 실제로 작동하게 만들고, 센서와 기기에서 직접 확인합니다. → FEELD, ROCKROCKROCK</p></div>
+      <div class="st-card"><h4>영상</h4><p>촬영과 편집으로 작업의 의도와 과정을 전달합니다. 360 촬영, 메이킹필름, 소개 영상을 만들었습니다. → FEELD, 쉼</p></div>
+    </div>
+  </section>
+
+  <section class="st-sec">
+    <div class="st-head"><span class="st-no">02</span><h3 class="pv-h">Process<small>나의 제작 방식</small></h3></div>
+    <p class="st-lead">AI는 초안과 반복 작업을 빠르게 만드는 도구로 쓰고, 방향을 정하고 결과를 다듬는 일은 직접 합니다.</p>
+    <ol class="st-steps">
+      <li><h4>기획 · 시안</h4><p>목표와 사용자를 정하고, 화면과 인터랙션 시안을 직접 디자인합니다.</p></li>
+      <li><h4>AI로 초안</h4><p>이미지 생성, 코드 작성, 사람 인식 같은 반복 작업을 AI로 빠르게 만듭니다.</p></li>
+      <li><h4>직접 보정 · 개선</h4><p>결과를 그대로 쓰지 않고, 시안과 의도에 맞게 값과 느낌을 하나씩 조정합니다.</p></li>
+      <li><h4>실제 환경에서 검증</h4><p>센서, 다른 기기, 전시장처럼 실제로 쓰일 환경에서 확인하고 다시 고칩니다.</p></li>
+    </ol>
+  </section>
+
+  <section class="st-sec">
+    <div class="st-head"><span class="st-no">03</span><h3 class="pv-h">AI × Hand<small>AI 활용과 직접 보정</small></h3></div>
+    <p class="st-lead">AI가 만든 결과물을 직접 보정하고 개선한 실제 사례입니다.</p>
+
+    <article class="pr-case">
+      <h4>Phosphate · 웹사이트 사진 25장</h4>
+      <div class="pr-pair">
+        <div class="pr-ai"><span class="k">AI가 한 일</span><p>섹션별로 필요한 사진 25장을 AI로 생성했습니다. 비슷한 장면 6장을 한 번에 격자로 만들었습니다.</p></div>
+        <div class="pr-me"><span class="k">직접 보정 · 개선</span><p>모든 사진이 한 사이트처럼 보이도록 흑백 · 고대비 · 필름 질감 · 다큐멘터리 느낌 · 글자 없음이라는 공통 스타일을 정해 모든 프롬프트에 붙였습니다. 격자를 칸별로 잘라 흑백과 밝기를 통일하고, 작은 사진은 크게 키워 선명하게 다듬었습니다.</p></div>
+      </div>
+      <div class="st-gallery" style="--cols: 2">
+        <figure><img src="images/phosphate/ai-images.webp" alt="AI 이미지 제작 과정 — 계획, 공통 프롬프트, 보정" loading="lazy"><figcaption><b>작업 과정 </b>계획 → 공통 스타일 프롬프트 → 자르기 · 흑백 · 밝기 보정</figcaption></figure>
+        <figure><img src="images/phosphate/processing.webp" alt="보정한 사진으로 완성한 가공 과정 갤러리" loading="lazy"><figcaption><b>결과 </b>같은 톤으로 맞춘 사진으로 완성한 가공 과정 갤러리</figcaption></figure>
+      </div>
+    </article>
+
+    <article class="pr-case">
+      <h4>FEELD · 360 촬영본을 3D 숲으로</h4>
+      <div class="pr-pair">
+        <div class="pr-ai"><span class="k">AI가 한 일</span><p>360 영상을 나눈 사진마다, 사람 인식 모델(YOLO)이 사람을 자동으로 찾아 지울 영역(마스크)을 만들었습니다.</p></div>
+        <div class="pr-me"><span class="k">직접 보정 · 개선</span><p>자동 인식이 촬영자를 놓치는 장면이 있어, 촬영자가 늘 있는 카메라 아래 방향은 항상 지우는 고정 마스크를 더했습니다. 인식 기준값을 낮추고 지우는 여백을 넓혔으며, 하늘 방향은 빼고 0.33초 간격으로 촘촘하게 뽑도록 고쳐 3D 재구성이 잘 되게 했습니다.</p></div>
+      </div>
+      <div class="st-gallery" style="--cols: 3">
+        <figure><img src="images/feeld/film-raw360.jpg" alt="360 원본 영상의 한 장면" loading="lazy"><figcaption><b>360 원본 </b>사람이 찍힌 양 끝은 잘라 내고 보여 드립니다</figcaption></figure>
+        <figure><img src="images/feeld/ply-mask.png" alt="사람을 지울 영역을 표시한 마스크" loading="lazy"><figcaption><b>마스크 </b>흰 부분은 3D 재구성에서 제외됩니다</figcaption></figure>
+        <figure><img src="images/feeld/hero-forest.webp" alt="재구성한 숲을 점 데이터로 띄운 모습" loading="lazy"><figcaption><b>결과 </b>사람 없이 재구성한 숲</figcaption></figure>
+      </div>
+    </article>
+
+    <article class="pr-case">
+      <h4>FEELD · Unity 손 인터랙션</h4>
+      <div class="pr-pair">
+        <div class="pr-ai"><span class="k">AI가 한 일</span><p>립모션 손 입력을 받아 숲 입자를 움직이는 스크립트와 셰이더의 초안을 AI로 작성했습니다.</p></div>
+        <div class="pr-me"><span class="k">직접 보정 · 개선</span><p>입자가 덩어리로 움직이거나 먼지처럼 보일 때마다 레퍼런스 영상을 기준으로 방향을 다시 잡았고, VFX Graph와 인스펙터 값을 직접 보며 조절했습니다. 손을 실제로 센서에 올려 반응을 확인하고, 값마다 떨림을 측정해 쓸 값을 골랐습니다.</p></div>
+      </div>
+      <div class="st-gallery" style="--cols: 2">
+        <figure><img src="images/feeld/film-dev2.jpg" alt="립모션 위에 손을 올리고 Unity 반응을 확인하는 모습" loading="lazy"><figcaption><b>실물 테스트 </b>센서에 손을 올리고 화면의 반응을 확인</figcaption></figure>
+        <figure><img src="images/feeld/film-touch.jpg" alt="이끼 체험대에 손을 얹어 반응을 확인하는 장면" loading="lazy"><figcaption><b>체험대 테스트 </b>이끼 체험대에 손을 얹어 확인</figcaption></figure>
+      </div>
+    </article>
+
+    <article class="pr-case">
+      <h4>FEELD 웹 · 포트폴리오 사이트</h4>
+      <div class="pr-pair">
+        <div class="pr-ai"><span class="k">AI가 한 일</span><p>직접 만든 디자인 시안(Figma · SVG)을 AI 코딩 도구로 웹에 구현했습니다.</p></div>
+        <div class="pr-me"><span class="k">직접 보정 · 개선</span><p>시안을 기준으로 구도와 색, 속도를 고쳤고, AI가 만든 인터랙션을 그대로 쓰지 않고 하나씩 원하는 느낌으로 조정했습니다. 맥 · 사파리처럼 실제 기기에서 생긴 문제도 직접 확인했습니다.</p></div>
+      </div>
+      <table class="pr-table">
+        <thead><tr><th>처음 만들어진 인터랙션</th><th>직접 조정한 방향</th></tr></thead>
+        <tbody>
+          <tr><td>마우스 커서 잔상</td><td>너무 길어서, 짧게 줄이고 아주 살짝 늦게 따라오도록</td></tr>
+          <tr><td>숲 스플랫의 파동</td><td>너무 크고 세서 약하게, 색이 돌아올 때 숲 안으로 걸어 들어가듯</td></tr>
+          <tr><td>전시공간 카메라</td><td>휙휙 돌아 어지러워서, 사람이 둘러보듯 천천히 작은 범위로</td></tr>
+          <tr><td>제작 과정의 선</td><td>손 떨린 느낌이라, 곡률은 그대로 두고 매끄럽게만</td></tr>
+          <tr><td>텍스트 등장</td><td>아래에서 위가 아니라, 왼쪽에서 오른쪽으로 서서히</td></tr>
+          <tr><td>엽서</td><td>제자리에서 떠다니지 않고, 오른쪽에서 왼쪽으로 흐르며 떠다니게</td></tr>
+          <tr><td>팀 소개 사진</td><td>한 번에 나오지 않고, 카드처럼 한 장씩 뒤집히며 등장</td></tr>
+          <tr><td>전시공간 동선</td><td>실제 동선처럼 커튼을 열고 입장 → 굿즈 → 계단 → 체험 순서로</td></tr>
+        </tbody>
+      </table>
+      <div class="st-gallery" style="--cols: 2">
+        <figure><img src="images/feeld/web-splat-color.webp" alt="색이 돌아온 숲 스플랫 장면" loading="lazy"><figcaption><b>숲 스플랫 </b>약하게 조정한 파동과 숲 안으로 들어가는 움직임</figcaption></figure>
+        <figure><img src="images/feeld/web-space.jpg" alt="입자로 만든 전시공간" loading="lazy"><figcaption><b>전시공간 </b>천천히 둘러보도록 조정한 카메라</figcaption></figure>
+      </div>
+    </article>
+  </section>
+
+  <section class="st-sec">
+    <div class="st-head"><span class="st-no">04</span><h3 class="pv-h">Principle<small>AI 활용 원칙</small></h3></div>
+    <ul class="pr-rules">
+      <li><b>AI는 초안과 반복 작업,</b> 방향과 마무리는 직접 정합니다.</li>
+      <li><b>기준은 내 시안과 의도입니다.</b> AI 결과가 그럴듯해도 시안과 다르면 다시 고칩니다.</li>
+      <li><b>실제 환경에서 확인합니다.</b> 센서, 다른 기기, 전시장에서 직접 보고 판단합니다.</li>
+      <li><b>쓴 만큼 밝힙니다.</b> 어디에 AI를 썼고 무엇을 직접 했는지 구분해 기록합니다.</li>
+    </ul>
+  </section>
+</main>
+
+<figure class="lightbox" id="lightbox" hidden><img alt=""><figcaption></figcaption></figure>
+<script>
+  // any image opens large; a click anywhere closes it
+  const box = document.getElementById('lightbox');
+  document.querySelector('.pr-body').addEventListener('click', e => {
+    const img = e.target.closest('.st-gallery img'); if (!img) return;
+    box.querySelector('img').src = img.src; box.querySelector('figcaption').textContent = img.alt; box.hidden = false;
+  });
+  box.addEventListener('click', () => { box.hidden = true; });
+</script>
+</body>
+</html>
